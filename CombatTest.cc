@@ -70,7 +70,7 @@ void EnemyCheck(vector<Enemy> &foes) {
 			cout << "Enemy " << i + 1 << ": DEAD" << endl;
 		}
 		else {
-			cout << "Enemy " << i + 1 << ": " << foes.at(i).health << endl;
+			cout << "Enemy " << i + 1 << ": " << foes.at(i).health << " hp" << endl;
 		}
 	}
 }
@@ -79,9 +79,9 @@ void BattleControls() {
 	cout << endl;
 	cout << "\t1: Use Melee\n";
 	cout << "\t2: Use Gun\n";
-	cout << "\t1: Take Cover\n";
-	cout << "\t1: CyberHack\n";
-	cout << "\t1: Analyze Enemy\n";
+	cout << "\t3: Take Cover\n";
+	cout << "\t4: CyberHack\n";
+	cout << "\t5: Analyze Enemy\n";
 	cout << endl;
 }
 
@@ -89,10 +89,12 @@ void BattleWon(vector<Enemy> &foes) { //If won distribute xp and raise lvl if ne
 	int battleXp = 25 * foes.size(); 
 
 	cout << endl;
-	cout << "That was tooo easy" << endl;
+	cout << "Vex: 'That was tooo easy'" << endl;
 	cout << endl;
+	cout << "BATTLE OVER:\n";
 	Vex.xp += 25 * foes.size();
 	cout << "\t" << battleXp << " Exp earned\n";
+	cout << "\tCurrent xp:" << Vex.xp << endl;
 	if (Vex.xp >= 100) {
 		cout << "\tLEVEL INCREASED\n";
 		Vex.level += 1; // lvl increase
@@ -139,18 +141,18 @@ bool Fight() {
 					break; 
 				}
 				if (playerInput == i + 1) {
-					cout << "Vex: HYAHHHHH" << endl;
+					cout << "Vex: 'HYAHHHHH'" << endl;
 					if (foes.at(i).notInCover) {
 						if (randDodge <= foes.at(i).dodgeChance) {
-							cout << "BZZZT EVASIVE MODE ACTIVATED (Atk Dodged)" << endl;
+							cout << "'BZZZT EVASIVE MODE ACTIVATED' (Atk Dodged)" << endl;
 						}
 						else if (randCrit <= Vex.critChance) {
-							cout << "Vex: Jackpot (CRIT)" << endl;
+							cout << "Vex: 'Jackpot' (CRIT)" << endl;
 							foes.at(i).health -= 2 * Vex.dmg * foes.at(i).armor; 
 						} 
 						else { foes.at(i).health -= Vex.dmg * foes.at(i).armor; }
 					}
-					else { cout << "BZZT INCOMING THREATS EVADED\n";} //Dialogue if enemy is taking cover
+					else { cout << "'BZZT INCOMING THREATS EVADED'\n";} //Dialogue if enemy is taking cover
 				}
 			}
 		}
@@ -163,31 +165,31 @@ bool Fight() {
 					break; 
 				}
 				if (playerInput == i + 1) {
-					cout << "Vex: FIRIINGGG" << endl;
+					cout << "Vex: 'FIRIINGGG'" << endl;
 					if (foes.at(i).notInCover) {
 						if (randDodge <= foes.at(i).dodgeChance) {
-							cout << "BZZZT EVASIVE MODE ACTIVATED (Atk Dodged)" << endl;
+							cout << "'BZZZT EVASIVE MODE ACTIVATED' (Atk Dodged)" << endl;
 						}
 						else if (randCrit <= Vex.critChance) {
-							cout << "Vex: Jackpot (CRIT)" << endl;
+							cout << "Vex: 'Jackpot' (CRIT)" << endl;
 							foes.at(i).health -= 2 * Vex.dmg * foes.at(i).armor; 
 						} 
 						else { foes.at(i).health -= Vex.dmg * foes.at(i).armor; }
 					}
-					else { cout << "BZZT INCOMING THREATS EVADED\n";} //Dialogue if enemy is taking cover
+					else { cout << "'BZZT INCOMING THREATS EVADED'\n";} //Dialogue if enemy is taking cover
 				}
 			}
 		}
 		else if (input == "3") { //Take Cover Choice
-			cout << "Vex: Gotta take cover" << endl;
+			cout << "Vex: 'Gotta take cover'" << endl;
 			playerNotInCover = false;
 		}
 		else if (input == "4") { //CyberHack Choice
 			cout << "Choose a target" << endl;
-			cout << "Vex: IM HACKKIN IT" << endl;
+			cout << "Vex: 'IM HACKKIN IT'" << endl;
 		}
 		else if (input == "5") { 
-			cout << "Vex: Hmm I See" << endl;
+			cout << "Vex: 'Hmm I See'" << endl;
 		}
 		else { cout << "You Hesitate or somethin" << endl; }
 	//End of Player Turn	
@@ -208,39 +210,39 @@ bool Fight() {
 			//cout << randNum << endl; //Test
 			if (foes.at(i).alive) {
 				if (randNum == 1) { //CyberHack
-					cout << "BZZZZT IM TERMINATING IT" << endl;
+					cout << "'BZZZZT IM TERMINATING IT'" << endl;
 				}
 				else if (randNum == 2 or randNum == 3) { //Taking Cover
-					cout << "BZZZZZT OPTIMAL COVER FOUND" << endl;
+					cout << "'BZZZZZT OPTIMAL COVER FOUND'" << endl;
 					foes.at(i).notInCover = false;
 				}
 				else if (randNum >= 4 and randNum <= 6) { //Shooting
-					cout << "BZZZT TARGET FOUND: FIRING" << endl;
+					cout << "'BZZZT TARGET FOUND: FIRING'" << endl;
 					if (playerNotInCover) { //If player is not in cover then attack lands
 						if (randDodge <= Vex.dodgeChance) {
-							cout << "Phew, close one (Atk Dodged)" << endl;
+							cout << "'Phew, close one' (Atk Dodged)" << endl;
 						}
 						else if (randCrit <= foes.at(i).critChance) {
-							cout << "BZZT WEAKPOINT DETECTED (CRIT)" << endl;
+							cout << "'BZZT WEAKPOINT DETECTED' (CRIT)" << endl;
 							hp -= 2 * foes.at(i).dmg * Vex.armor; 
 						} 
 						else { hp -= foes.at(i).dmg * Vex.armor; }
 					}
-					else { cout << "Vex: Not a chance\n";} //Dialogue if player is taking cover
+					else { cout << "Vex: 'Not a chance'\n";} //Dialogue if player is taking cover
 				}
 				else { //Attacking
-					cout << "BZZZZT TARGET FOUND: ATTACKING" << endl;
+					cout << "'BZZZZT TARGET FOUND: ATTACKING'" << endl;
 					if (playerNotInCover) {
 						if (randDodge <= Vex.dodgeChance) {
-							cout << "Phew, close one (Atk Dodged)" << endl;
+							cout << "'Phew, close one' (Atk Dodged)" << endl;
 						}
 						else if (randCrit <= foes.at(i).critChance) {
-							cout << "BZZT WEAKPOINT DETECTED (CRIT)" << endl;
+							cout << "'BZZT WEAKPOINT DETECTED' (CRIT)" << endl;
 							hp -= 2 * foes.at(i).dmg * Vex.armor; 
 						} 
 						else { hp -= foes.at(i).dmg * Vex.armor; }
 					}
-					else { cout << "Vex: Not a chance\n";} //Dialogue if player is taking cover
+					else { cout << "Vex: 'Not a chance'\n";} //Dialogue if player is taking cover
 				}
 			}
 		}
