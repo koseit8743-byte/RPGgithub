@@ -94,7 +94,8 @@ void BattleWon(vector<Enemy> &foes) { //If won distribute xp and raise lvl if ne
 	cout << "BATTLE OVER:\n";
 	Vex.xp += 25 * foes.size();
 	cout << "\t" << battleXp << " Exp earned\n";
-	cout << "\tCurrent xp:" << Vex.xp << endl;
+	cout << "\tCurrent lvl: " << Vex.level << endl;
+	cout << "\tCurrent xp: " << Vex.xp << endl;
 	if (Vex.xp >= 100) {
 		cout << "\tLEVEL INCREASED\n";
 		Vex.level += 1; // lvl increase
@@ -134,12 +135,19 @@ bool Fight() {
 
 		if (input == "1") { //Melee Choice
 			cout << "\tChoose a target" << endl;
+		 
+			//playerInput = read("\tChoose a target\n");
 			cin >> playerInput;
 			for (int i = 0; i < foes.size(); i++) {
-				if (cin.fail()) {             //TODO I NEEEEED HELP WIT DIS IT DONT WORK
+				if (!cin) {  //IF INPUT IS NOT AN INTEGER           //TODO I NEEEEED HELP WIT DIS IT DONT WORK
+					cin.clear();
+					string s;
+					cin >> s;
+					cout << endl;
 					cout << "You Hesitate or somethin" << endl;
 					break; 
 				}
+
 				if (playerInput == i + 1) {
 					cout << "Vex: 'HYAHHHHH'" << endl;
 					if (foes.at(i).notInCover) {
@@ -158,12 +166,18 @@ bool Fight() {
 		}
 		else if (input == "2") { //Shoot Choice
 			cout << "\tChoose a target" << endl;
+			
 			cin >> playerInput;
 			for (int i = 0; i < foes.size(); i++) {
-				if (cin.fail()) {             //TODO I NEEEEED HELP WIT DIS IT DONT WORK
+				if (!cin) {             //TODO I NEEEEED HELP WIT DIS IT DONT WORK
+					cin.clear(); //clears the variable I think
+					string s;    //New variable type to move the cin into
+					cin >> s;    //cin is located in new variable
+					cout << endl;
 					cout << "You Hesitate or somethin" << endl;
 					break; 
 				}
+				
 				if (playerInput == i + 1) {
 					cout << "Vex: 'FIRIINGGG'" << endl;
 					if (foes.at(i).notInCover) {
