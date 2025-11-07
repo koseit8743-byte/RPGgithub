@@ -11,6 +11,47 @@
 using namespace std;
 //COLOR MAP: Player=YELLOW Raze=CYAN Enemy=RED Basic=WHITE
 
+//FIRST DIALOG W RAZE
+void RazeReplyMenu() {
+    cout << WHITE << "\n[Reply options]" << RESET << endl;
+    cout << WHITE << "  1) \"Always ready. Feed me intel.\"\n"
+         << "  2) \"Hold up—what’s the plan?\"\n"
+         << "  3) \"Quit the chatter, gotta focus up.\"\n"
+         << "  4) Type my own reply\n" << RESET;
+    string choice;
+    while (true) {
+        cout << WHITE << "Choose 1-4: " << RESET;
+        choice = getline();
+        if (choice == "1" || choice == "2" || choice == "3" || choice == "4") break;
+        cout << WHITE << "(Invalid. Try again.)\n" << RESET;
+    }
+
+    if (choice == "1") {
+        cout << YELLOW << "You: Always ready. Feed me intel." << RESET << endl;
+        cout << CYAN   << "Raze: Copy. Patrol drone east, guard on the roof. Keep low, choom." << RESET << endl;
+    } else if (choice == "2") {
+        cout << YELLOW << "You: Hold up—what’s the plan?" << RESET << endl;
+        cout << CYAN   << "Raze: Crack the alley terminal, slide past the ICE, then sprint south. Clean and quiet." << RESET << endl;
+    } else if (choice == "3") {
+        cout << YELLOW << "You: Quit the chatter, gotta focus up." << RESET << endl;
+        cout << CYAN   << "Raze: Heh - deres dat edgerunner attitude. Best of Luck choom" << RESET << endl;
+    } else { // "Type my own reply"
+        cout << WHITE << "Type your reply: " << RESET;
+        string freeReply = getline();
+        if (freeReply.empty()) freeReply = "...";
+        cout << YELLOW << "You: " << freeReply << RESET << endl;
+
+        // easter egg line from Raze based on input
+        if (freeReply.find("?") != string::npos) {
+            cout << CYAN << "Raze: Questions later—hit the terminal first. I’ll keep the feed hot." << RESET << endl;
+        } else if (freeReply.size() <= 6) {
+            cout << CYAN << "Raze: Short and sweet. Moving you a route ping now." << RESET << endl;
+        } else {
+            cout << CYAN << "Raze: Logged. I’ll patch in updates while you move. Optics up." << RESET << endl;
+        }
+    }
+}
+
 //START
 bool firstPuzzle() {
 	cout << WHITE << endl << "You approach a humming street treminal in a dark alleyway.\n"
@@ -84,8 +125,10 @@ bool RazeMissionBrief() {//change dialogue
 }
 
 
-
-
+int main() {
+	if(!RazeMissionBrief()) {
+		return 0;
+	}
 	cout << YELLOW << "\n*Holo-screen flickers to life...*" << RESET << endl;
 	// INTRO Banner
 	cout << MAGENTA << R"(
@@ -116,10 +159,7 @@ bool RazeMissionBrief() {//change dialogue
     // START OF RPG
     cout << CYAN << "[Incoming Call: RAZE]" << RESET << endl;
     cout << CYAN << "Raze: Yo, choom... you ready to dance?" << RESET << endl;
-
-
-int main() {
-	cout << "start" << endl;
+	RazeReplyMenu();
 	firstPuzzle();
 
 
