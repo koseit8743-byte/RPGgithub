@@ -1,44 +1,86 @@
 //Fill out this comment with your names and which bullet points you did
+<<< <<< < HEAD
 //Partners: DeRaffaele, Romero, Rangel, Osei Tutu,
 //Bullet Points: 1,2,3,4,5
 //Extra Credit: 2,3
 //URL to cover art and music:
-
-#include <iostream>
-#include <string>
-#include <algorithm>
+== == == =
+//Partners: Kwabe
+//Bullet Points:
+//Extra Credit:
+//URL to cover art and music:
+#include "/public/read.h"
 #include "/public/colors.h"
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <unistd.h>
+    using namespace std;
+
 //COLOR MAP: Player=YELLOW Raze=CYAN Enemy=RED Basic=WHITE
+/// movecursor(5, 20);
+// setcolor(6, 7, 67);
+// setbgcolor(67, 67, 67);
+// set_raw_mode(true);
+//char ch =
 
 //START
-bool RazeMissionBrief() {//change dialogue
+bool RazeMissionBrief() { //change dialogue
 	cout << CYAN << "[Incoming Call: RAZE]\n"
-         << "Raze: Yo, Vex — you online ? Good. The city’s humming tonight, all neon and lies.\n"
-         << "Syntek’s got their claws deep in every brain on the block. ECHO’s whispering through implants like a ghost in the code.\n"
-         << "Yeah, I hear it. Static in every frequency. We shut it down tonight.\n"
-         << "You get in, I keep the line open. We’re hitting Syntek Tower — center of the storm.\n"
-         << "You’ll need to crack five ICE walls, dance past the patrols, and drop the liberation virus into their mainframe.\n"
-         << "I’ll be your eyes in the net. You handle the ground work, I’ll ghost the signal.\n"
-         << "Raze: Remember, stay low, and don’t fry your deck." << RESET << endl;
+	     << "Raze: Yo, Vex — you online ? Good. The city’s buzzin tonight, all neon wrappin straight lies in vibrant colors.\n"
+	     << "Syntek’s messin with heads again, They got their claws deep in every brain on the block.\n"
+	     << "Hear that Static? It's in every damn frequency. We're pullin the plug on this shit tonight.\n"
+	     << "Heres the plan, you get in and get your hands dirty. I'll keep you from getting caught. We’re hitting Syntek Tower at it's core.\n"
+	     << "You’ll need to break down those ICE walls, dance past the patrols, and drop the liberation virus into their mainframe.\n"
+	     << "I'll net-guide, you ground-pound. I'll ghost our presence - got that?.\n"
+	     << "Remember, stay low, and don’t fry your deck." << RESET << endl;
 
-    cout << WHITE << "\nRun a tactical simulation of Mission 1 now? (y/n): " << RESET;
-	
-	 string ans;
-    if (!std::getline(cin, ans)) ans.clear();
-    while (!ans.empty() && (ans.back() == ' ' || ans.back() == '\t' || ans.back() == '\r')) ans.pop_back();
-    if (!ans.empty() && (ans[0] == 'Y' || ans[0] == 'y')) {
-        cout << YELLOW << "You: Plugged in. Running the BD now.\n" << RESET;
-        return true;
-    } else {
-        cout << CYAN << "Raze: Your loss, choom.\n" << RESET;
-        return false;
-    }
+	cout << WHITE << "\nRun a tactical simulation of Mission 1 now? (y/n): " << RESET;
+
+	string ans;
+	if (!std::getline(cin, ans)) ans.clear();
+	while (!ans.empty() && (ans.back() == ' ' || ans.back() == '\t' || ans.back() == '\r')) ans.pop_back();
+	if (!ans.empty() && (ans[0] == 'Y' || ans[0] == 'y')) {
+		cout << YELLOW << "You: Plugged in. Running the BD now.\n" << RESET;
+		return true;
+	} else {
+		cout << CYAN << "Raze: Your loss, choom.\n" << RESET;
+		return false;
+	}
 }
+//extra dialogue ideas
+void CombatDialogue(bool playerAttacking, bool enemyattacking) {
+	vector<string> RazeResponses = {
+		"Raze: Aye nice shot"
+		"Raze: That hunk of scraps's gonna need some serious repairs!"
+		"Raze: Their hacks are worse than my GrandMa's"
+		"Raze: Another choom bites the digital dust"
+	};
+	if (playerAttacking) {
+		int Razerand = rand() % RazeResponses.size();
+		cout << CYAN << RazeResponses.at(Razerand) << endl;
+	}
 
+	vector<string> Enemyattack = {
+		"SYNTEX BOT: SYNTEX Property, FREEZE!"
 
+		"Raze: INCOMING!dont make me have to find a new partner"
 
+	};
+	if (enemyattacking) {
+		int enemyrand = rand() % Enemyattack.size();
+		cout << RED << Enemyattack.at(enemyrand) << endl;
+	}
+}
 int main() {
+
+	RazeMissionBrief();
+
+
+
+
+
+	>>> >>> > 2b18f9f(Kwabe Dialoque)
+
 
 	cout << YELLOW << "\n*Holo-screen flickers to life...*" << RESET << endl;
 	// INTRO Banner

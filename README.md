@@ -1,4 +1,3 @@
 # RPGgithub
 RPG project
-Romero
-Combat
+KWABENA OSEI TUTU - DIOLOGUE and some COLORS
