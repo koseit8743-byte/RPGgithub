@@ -1,10 +1,8 @@
 //Fill out this comment with your names and which bullet points you did
-<<< <<< < HEAD
 //Partners: DeRaffaele, Romero, Rangel, Osei Tutu,
 //Bullet Points: 1,2,3,4,5
 //Extra Credit: 2,3
 //URL to cover art and music:
-== == == =
 //Partners: Kwabe
 //Bullet Points:
 //Extra Credit:
@@ -79,7 +77,6 @@ int main() {
 
 
 
-	>>> >>> > 2b18f9f(Kwabe Dialoque)
 
 
 	cout << YELLOW << "\n*Holo-screen flickers to life...*" << RESET << endl;
