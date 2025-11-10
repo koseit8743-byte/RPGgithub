@@ -1,9 +1,6 @@
 TURN BASED COMBAT-
 
 Have so far:
-	I HAVE NOTHING!!!!!!!!!
-
-POSSIBLE IDEAS:
 	-stat point system (Armor multiplier (Dmg Reduction), 5+ Base Health, +1 RAM, Precision Chance (Critical Chance/hit), Dodge)
 		* Base stats should be:
 			-Armor 1.00 (-0.02 to reduce dmg)
@@ -12,6 +9,22 @@ POSSIBLE IDEAS:
 			-Crit Chance 10%
 			-Dodge 5%
 	-level & xp system (seperate xp from enemy encounters and milestones)
+
+	-Player Actions 
+		*Melee (Close Combat)
+		*Shoot (Ranged Combat)
+		*Take Cover
+		*CyberHack (Actions explained above)
+		*Analyze Enemy
+
+	-Enemy Actions
+		*Attack (Melee and Shoot)
+		*Take Cover
+		*CyberHack
+		*
+	-Boss Actions (differ from regular enemies with rising Aggression rates and retaliation moves (GUARANTEED ACTIONS))
+
+POSSIBLE IDEAS:
 	
 	-CyberHack system (if player RAM exceeds enemy RAM then 100% succession / if player RAM is within a 2/3 threshold then 50% of succession / if player RAM does not meet threshold then fail and end turn)
 		* If successful, options are:
@@ -20,25 +33,12 @@ POSSIBLE IDEAS:
 		* If successful and inventory is implemented, options are:
 			- Armor Strip (make enemy susceptible to dmg types they would be strong against / set armor multiplier to 1.00)
 		(MORE TO BE ADDED MAYBE)
-
-
-
-	-Player Actions 
-		*Melee (Close Combat)
-		*Shoot (Ranged Combat)
-		*Take Cover
-		*CyberHack (Actions explained above)
 	
 	-Enemy CyberHack system (if action is rolled then 100% succession rate of occuring)
 		*EMP Wave (Disables "Shoot" and "CyberHack" / if disabled options chosen then skip turn)
 		*Neural Virus (Siphons a random stat from player for three turns)
 		(NEEDS MORE)
 
-	-Enemy Actions
-		*Attack (Melee and Shoot)
-		*Take Cover
-		*CyberHack
-		*
 	-Boss Actions (differ from regular enemies with rising Aggression rates and retaliation moves (GUARANTEED ACTIONS))
 		(NEEDS A SPECIAL ACTION)
 	
