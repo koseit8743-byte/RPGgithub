@@ -88,9 +88,47 @@ void CombatDialogue(bool playerAttacking, bool enemyattacking) {
 int main() {
 
 	RazeMissionBrief();
-	return 0;
+	CombatDialogue(true, false);
 
 
 
+
+
+
+	cout << YELLOW << "\n*Holo-screen flickers to life...*" << RESET << endl;
+// INTRO Banner
+	cout << MAGENTA << R"(
+/---------------------------------------------------------------------\
+/-                                                                   -\
+\-                      W E L C O M E   T O   T H E                 -/
+ /-                                                                 -\
+)" << RESET;
+
+
+    cout << YELLOW << R"(
+             _____   ___   _   _   _____  ______
+            |  _  \ / _ \ | \ | | /  __ \ |  ___|
+            | |  | | /_\ \|  \| | | /  \/ |_|__
+            | | | |   _  || . ` | | |     |____|
+            | |/ / | | | || |\  | | \__/\ | |___
+            |___/  \_| |_/\_| \_/  \____/ |_____|
+)" << RESET;
+
+
+    cout << MAGENTA << R"(
+ \-                                                                 -/
+ /-                     E  D  G  E  R  U  N  N  E  R                -\
+\-                                                                   -/
+\---------------------------------------------------------------------/
+)" << RESET << endl;
+
+    // START OF RPG
+    cout << CYAN << "[Incoming Call: RAZE]" << RESET << endl;
+    cout << CYAN << "Raze: Yo, choom... you ready to dance?" << RESET << endl;
+
+
+
+
+
+return 0;
 }
-
