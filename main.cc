@@ -88,7 +88,7 @@ void CombatDialogue(bool playerAttacking, bool enemyattacking) {
 int main() {
 
 	RazeMissionBrief();
-	CombatDialogue(true, false);
+//	CombatDialogue(true, false);  >>>> ADD THIS LATER
 
 
 
