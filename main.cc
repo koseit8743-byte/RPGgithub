@@ -4,7 +4,6 @@
 //Extra Credit: 2,3
 //URL to cover art and music:
 
-
 //Partners: Kwabe
 //Bullet Points:
 //Extra Credit:
@@ -95,6 +94,7 @@ int main() {
 
 	RazeMissionBrief();
 	CombatDialogue(true, false);
+
 
 
 
