@@ -17,8 +17,12 @@ void getMap(string findMap, vector<string>& returnMap) {
         temp = readline(ins);
         if (!ins) break;
         //cout << temp << endl;;
-        for (char& c : temp) {
-            if (c == ',') c = ' ';
+        for (int i = 0; i < temp.size(); i++) {
+			if(temp.at(i) == ','){
+				for (int j = i; j < temp.size() - 1; j++){
+					temp.at(j) = temp.at(j + 1);
+				}
+			}
         }
         returnMap.push_back(temp);
     }
