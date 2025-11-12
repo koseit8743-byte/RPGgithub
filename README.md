@@ -1,2 +1,3 @@
 # RPGgithub
 RPG project
+KWABENA OSEI TUTU - DIOLOGUE and some COLORS
