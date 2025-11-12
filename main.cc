@@ -329,6 +329,9 @@ void EnemyCheck(vector<Enemy> &foes, vector<Enemy> healthCheck) {
 			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 10) {
 				cout << "|==------------------|" << RESET;
 			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health <= 10) {
+				cout << "|=------------------|" << RESET;
+			}
 			cout << endl;
 			//cout << "TEST: " << foes.at(i).health / healthCheck.at(i).health * 100 << endl;
 		}
@@ -337,12 +340,16 @@ void EnemyCheck(vector<Enemy> &foes, vector<Enemy> healthCheck) {
 //=================================================================================================
 
 void BattleControls() {
+
 	cout << YELLOW << endl;
-	cout << "\t1: Use Melee\n";
-	cout << "\t2: Use Gun\n";
-	cout << "\t3: Take Cover\n";
-	cout << "\t4: CyberHack\n";
-	cout << "\t5: Analyze Enemy\n";
+	//setbgcolor(60, 60, 0);
+	cout << "\t-----------------\n";
+	cout << "\t1: Use Melee    |\n";
+	cout << "\t2: Use Gun      |\n";
+	cout << "\t3: Take Cover   |\n";
+	cout << "\t4: CyberHack    |\n";
+	cout << "\t5: Analyze Enemy|\n";
+	cout << "\t-----------------\n";
 	cout << RESET << endl;
 }
 //=================================================================================================
@@ -806,34 +813,52 @@ bool Fight(bool enemyGoesFirst) {
 		if (hp <= 0) { hp = 0; }
 			cout << YELLOW << "Vex: " << GREEN << hp << " hp "; //Test
 			if (hp == Vex.health) {
+				setbgcolor(0, 60, 0);
 				cout << "|====================|" << RESET;
 			}
 			else if (hp * 100 / Vex.health >= 90) {
+				setbgcolor(0, 60, 0);
 				cout << "|==================--|" << RESET;
 			}
 			else if (hp * 100 / Vex.health >= 80) {
+				setbgcolor(0, 60, 0);
 				cout << "|================----|" << RESET;
 			}
 			else if (hp * 100 / Vex.health >= 70) {
+				setbgcolor(0, 60, 0);
 				cout << "|==============------|" << RESET;
 			}
 			else if (hp * 100 / Vex.health >= 60) {
+				setbgcolor(0, 60, 0);
 				cout << "|============--------|" << RESET;
 			}
 			else if (hp * 100 / Vex.health >= 50) {
+				setbgcolor(0, 60, 0);
 				cout << "|==========----------|" << RESET;
 			}
 			else if (hp * 100 / Vex.health >= 40) {
+				setbgcolor(0, 60, 0);
 				cout << "|========------------|" << RESET;
 			}
 			else if (hp * 100 / Vex.health >= 30) {
+				setbgcolor(0, 60, 0);
 				cout << "|======--------------|" << RESET;
 			}
 			else if (hp * 100 / Vex.health >= 20) {
+				setbgcolor(30, 0, 0);
 				cout << "|====----------------|" << RESET;
 			}
 			else if (hp * 100 / Vex.health >= 10) {
+				setbgcolor(60, 0, 0);
 				cout << "|==------------------|" << RESET;
+			}
+			else if (hp * 100 / Vex.health <= 10 and hp * 100 / Vex.health >= 1) {
+				setbgcolor(90, 0, 0);
+				cout << "|=-------------------|" << RESET;
+			} 
+			else {
+				setbgcolor(90, 0, 0);
+				cout << "|--------------------|" << RESET;
 			}
 			cout << endl;
 		//Win/loss conditions
