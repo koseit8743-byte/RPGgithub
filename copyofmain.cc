@@ -58,7 +58,6 @@ void CombatDialogue(bool playerAttacking, bool enemyattacking) {
 
 	}
 }
-
 struct Player {		
 	int level = 1;
 	int xp = 0;

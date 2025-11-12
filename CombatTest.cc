@@ -283,11 +283,13 @@ bool Fight(bool enemyGoesFirst) {
 							foes.at(i).health -= 2 * Vex.dmg * foes.at(i).armor; 
 							dmg = 2 * Vex.dmg * foes.at(i).armor; 
 							cout << YELLOW << "\t" << dmg << "-DMG" << RESET << endl;
+							//CombatDialogue(true, false);
 						} 
 						else { 
 							foes.at(i).health -= Vex.dmg * foes.at(i).armor; 
 							dmg = Vex.dmg * foes.at(i).armor; 
 							cout << YELLOW << "\t" << dmg << "-DMG" << RESET << endl;
+							//CombatDialogue(true, false);
 						}
 					}
 					else { cout << RED << "'BZZT INCOMING THREATS EVADED' (IN COVER)\n" << RESET;} //Dialogue if enemy is taking cover
@@ -322,11 +324,13 @@ bool Fight(bool enemyGoesFirst) {
 							foes.at(i).health -= 2 * Vex.dmg * foes.at(i).armor; 
 							dmg = 2 * Vex.dmg * foes.at(i).armor; 
 							cout << YELLOW << "\t" << dmg << "-DMG" << RESET << endl;
+							//CombatDialogue(true, false);
 						} 
 						else { 
 							foes.at(i).health -= Vex.dmg * foes.at(i).armor; 
 							dmg = Vex.dmg * foes.at(i).armor; 
 							cout << YELLOW << "\t" << dmg << "-DMG" << RESET << endl;
+							//CombatDialogue(true, false);
 						}
 					}
 					else { cout << RED << "'BZZT INCOMING THREATS EVADED' (IN COVER)\n" << RESET;} //Dialogue if enemy is taking cover
@@ -517,6 +521,7 @@ bool Fight(bool enemyGoesFirst) {
 				}
 				//==================================================================================================
 				else if (randNum >= 4 and randNum <= 6) { //Shooting
+					//CombatDialogue(false, true);
 					cout << RED << "'BZZZT TARGET FOUND: FIRING'" << RESET << endl;
 					if (playerNotInCover) { //If player is not in cover then attack lands
 						if (randDodge <= Vex.dodgeChance) {
@@ -538,6 +543,7 @@ bool Fight(bool enemyGoesFirst) {
 				}
 				//==================================================================================================
 				else { //Attacking
+					//CombatDialogue(false, true);
 					cout << RED << "'BZZZZT TARGET FOUND: ATTACKING'" << RESET << endl;
 					if (playerNotInCover) {
 						if (randDodge <= Vex.dodgeChance) {
