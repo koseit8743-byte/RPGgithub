@@ -29,8 +29,9 @@ void RazeReplyMenu() {
          << "  4) Type my own reply\n" << RESET;
     string choice;
     while (true) {
-        cout << WHITE << "Choose 1-4: " << RESET;
-        choice = getline();
+        cout << WHITE;
+        choice = readline("Choose 1-4: ");
+        cout << RESET;
         if (choice == "1" || choice == "2" || choice == "3" || choice == "4") break;
         cout << WHITE << "(Invalid. Try again.)\n" << RESET;
     }
@@ -45,8 +46,9 @@ void RazeReplyMenu() {
         cout << YELLOW << "You: Quit the chatter, gotta focus up." << RESET << endl;
         cout << CYAN   << "Raze: Heh - deres dat edgerunner attitude. Best of Luck choom" << RESET << endl;
     } else { // "Type my own reply"
-        cout << WHITE << "Type your reply: " << RESET;
-        string freeReply = getline();
+        cout << WHITE;
+        string freeReply = readline("Type your reply: ");
+        cout << RESET;
         if (freeReply.empty()) freeReply = "...";
         cout << YELLOW << "You: " << freeReply << RESET << endl;
 
@@ -109,17 +111,6 @@ bool firstPuzzle() {
 	return false;
 }
 
-bool RazeMissionBrief() {//change dialogue
-	cout << CYAN << "[Incoming Call: RAZE]\n"
-         << "Raze: Yo, Vex — you online ? Good. The city’s humming tonight, all neon and lies.\n"
-         << "Syntek’s got their claws deep in every brain on the block. ECHO’s whispering through implants like a ghost in the code.\n"
-         << "Yeah, I hear it. Static in every frequency. We shut it down tonight.\n"
-         << "You get in, I keep the line open. We’re hitting Syntek Tower — center of the storm.\n"
-         << "You’ll need to crack five ICE walls, dance past the patrols, and drop the liberation virus into their mainframe.\n"
-         << "I’ll be your eyes in the net. You handle the ground work, I’ll ghost the signal.\n"
-         << "Raze: Remember, stay low, and don’t fry your deck." << RESET << endl;
-
-    cout << WHITE << "\nRun a tactical simulation of Mission 1 now? (y/n): " << RESET;
 bool RazeMissionBrief() { //change dialogue
 //	setbgcolor(40, 0, 60); // bluish pruple;
 	setbgcolor(60, 0, 50); //pinkish purple ;
@@ -799,8 +790,10 @@ bool Fight(bool enemyGoesFirst) {
 								//END OF COMBAT
 
 int main() {
-
-	RazeMissionBrief();
+	bool playerGoesFirst;
+	if(!RazeMissionBrief()) {
+		return 0;
+	}
 //	CombatDialogue(true, false);  >>>> ADD THIS LATER
 
 
@@ -839,10 +832,10 @@ int main() {
     cout << CYAN << "[Incoming Call: RAZE]" << RESET << endl;
     cout << CYAN << "Raze: Yo, choom... you ready to dance?" << RESET << endl;
 	RazeReplyMenu();
-	firstPuzzle();
-
-
-	Fight(false); //TRUE FOR ENEMY TURN FIRST / FALSE FOR PLAYER TURN FIRST
+	playerGoesFirst = firstPuzzle();
+	
+	if (playerGoesFirst) { Fight(false); }//TRUE FOR ENEMY TURN FIRST / FALSE FOR PLAYER TURN FIRST
+	else { Fight(true); }                 //I WOULD CHANGE IT BUT IT WOULD BE A HASSLE AT THIS POINT OF TIME
 
 	return 0;
 }
