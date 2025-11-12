@@ -1,9 +1,8 @@
 #ifndef MAP_DEVKIT_H
 #define MAP_DEVKIT_H
-#include <function>
 #include <fstream>
 #include <string>
-#include <"/public/read.h">
+#include "/public/read.h"
 using namespace std;
 
 void getMap(string findMap, vector<string>& returnMap) {
@@ -64,7 +63,6 @@ void setCharacterPosition(vector<int>& currentPos, vector<string>& currentMap, v
 }
 void printMap(vector<string>& currentMap, vector<int>& currentPlayerPos) {
     const int FPS = 30;
-    clearscreen();
     vector<int> prevPlayerPos = currentPlayerPos;
     vector<string> updatedMap = currentMap;
     setCharacterPosition(currentPlayerPos, currentMap, updatedMap);
@@ -99,3 +97,4 @@ void printMap(vector<string>& currentMap, vector<int>& currentPlayerPos) {
     return 0;
 
    */
+#endif
