@@ -87,10 +87,17 @@ void updateMap(vector<string>& currentMap, vector<vector<int>>& currentCharacter
 					char currentChar = updatedMap.at(j).at(k);
 					movecursor(j % currentMap.size() + 1, k % currentMap.at(j).size() + 1);
 					if(currentChar == '.'){
-						cout << RED;
-					} else if (currentChar == 'X'){
-						cout << BLUE;
-					}
+                        cout << RED;
+                    } else if (currentChar == 'X'){
+                        cout << BLUE;
+                    } else if (currentChar == 'C'){
+                        cout << YELLOW;
+                    } else if (currentChar == 'T'){
+                        cout << GREEN;
+                    } else if (currentChar == 'E'){
+                        cout << MAGENTA;
+                    }
+
 					cout << currentMap.at(j).at(k);
 					resetcolor();
 				}
@@ -103,6 +110,12 @@ void updateMap(vector<string>& currentMap, vector<vector<int>>& currentCharacter
 						cout << RED;
 					} else if (currentChar == 'X'){
 						cout << BLUE;
+					} else if (currentChar == 'C'){
+						cout << YELLOW;
+					} else if (currentChar == 'T'){
+						cout << GREEN;
+					} else if (currentChar == 'E'){
+						cout << MAGENTA;
 					}
 					cout << updatedMap.at(j).at(k);
 					resetcolor();
@@ -120,10 +133,17 @@ void printMap(vector<string>& currentMap, vector<vector<int>>& currentPlayerPos,
 			char currentChar = currentMap.at(i).at(j);
 			movecursor(i % currentMap.size() + 1, j % currentMap.at(i).size() + 1);
 			if(currentChar == '.'){
-				cout << RED;
-			} else if (currentChar == 'X'){
-				cout << BLUE;
-			}
+                        cout << RED;
+                    } else if (currentChar == 'X'){
+                        cout << BLUE;
+                    } else if (currentChar == 'C'){
+                        cout << YELLOW;
+                    } else if (currentChar == 'T'){
+                        cout << GREEN;
+                    } else if (currentChar == 'E'){
+                        cout << MAGENTA;
+                    }
+
 			cout << currentChar;
 			resetcolor();
 		}
