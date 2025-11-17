@@ -1,17 +1,30 @@
+# Prerequisites
+*.d
+
 # Compiled Object files
+*.slo
+*.lo
 *.o
 *.obj
-*.lo
-*.slo
 
 # Precompiled Headers
 *.gch
 *.pch
 
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
+
+# Fortran module files
+*.mod
+*.smod
 
 # Compiled Static libraries
 *.lai
@@ -24,23 +37,5 @@
 *.out
 *.app
 
-# Build folders (common names)
-build/
-bin/
-obj/
-Debug/
-Release/
-
-# IDE-specific files (e.g., Visual Studio)
-.vs/
-*.vcxproj.user
-*.suo
-*.opensdf
-*.sdf
-*.VC.db
-
-# Other temporary files
-*~
-*.bak
-*.swp
-*.tmp
+# debug information files
+*.dwo

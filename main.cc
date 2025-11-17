@@ -52,47 +52,45 @@ bool RazeMissionBrief() {//change dialogue
 
 //First convo with Raze
 void RazeReplyMenu() {
-	cout << WHITE << "\n[Reply options]" << RESET << endl;
-	cout << WHITE << "  1) \"Always ready. Feed me intel.\"\n"
-	     << "  2) \"Hold up—what’s the plan?\"\n"
-	     << "  3) \"Quit the chatter, gotta focus up.\"\n"
-	     << "  4) Type my own reply\n" << RESET;
-	string choice;
-	while (true) {
-		cout << WHITE << "Choose 1-4: " << endl << RESET;
-		choice = readline(cin);
-		if (choice == "1" || choice == "2" || choice == "3" || choice == "4") break;
-		cout << WHITE << "(Invalid. Try again.)\n" << endl << RESET;
-	}
+    cout << WHITE << "\n[Reply options]" << RESET << endl;
+    cout << WHITE << "  1) \"Always ready. Feed me intel.\"\n"
+         << "  2) \"Hold up—what’s the plan?\"\n"
+         << "  3) \"Quit the chatter, gotta focus up.\"\n"
+         << "  4) Type my own reply\n" << RESET;
+    string choice;
+    while (true) {
+        cout << WHITE;
+        choice = readline("Choose 1-4: ");
+        cout << RESET;
+        if (choice == "1" || choice == "2" || choice == "3" || choice == "4") break;
+        cout << WHITE << "(Invalid. Try again.)\n" << RESET;
+    }
 
-	if (choice == "1") {
-		cout << YELLOW << "You: Always ready. Feed me intel." << RESET << endl;
-		cout << CYAN   << "Raze: Copy. Patrol drone east, guards sweeping da streets. Keep low, choom.\n"
-		     "You're going to need to find a terminal to get started." << RESET << endl;
-	} else if (choice == "2") {
-		cout << YELLOW << "You: Hold up—what’s the plan?" << RESET << endl;
-		cout << CYAN   << "Raze: Crack the alley terminal, slide past the Syntek gaurds, head to Syntek tower. Clean and quiet." << RESET << endl;
-	} else if (choice == "3") {
-		cout << YELLOW << "You: Quit the chatter, gotta focus up." << RESET << endl;
-		cout << CYAN   << "Raze: Heh - deres dat edgerunner attitude. Best of Luck choom\n"
-		     "You're going to need to find a terminal to get started." << RESET << endl;
-	} else { // "Type my own reply"
-		cout << WHITE << "Type your reply: " << RESET;
-		string freeReply = readline(cin);
-		if (freeReply.empty()) freeReply = "...";
-		cout << YELLOW << "You: " << freeReply << RESET << endl;
+    if (choice == "1") {
+        cout << YELLOW << "You: Always ready. Feed me intel." << RESET << endl;
+        cout << CYAN   << "Raze: Copy. Patrol drone east, guard on the roof. Keep low, choom." << RESET << endl;
+    } else if (choice == "2") {
+        cout << YELLOW << "You: Hold up—what’s the plan?" << RESET << endl;
+        cout << CYAN   << "Raze: Crack the alley terminal, slide past the ICE, then sprint south. Clean and quiet." << RESET << endl;
+    } else if (choice == "3") {
+        cout << YELLOW << "You: Quit the chatter, gotta focus up." << RESET << endl;
+        cout << CYAN   << "Raze: Heh - deres dat edgerunner attitude. Best of Luck choom" << RESET << endl;
+    } else { // "Type my own reply"
+        cout << WHITE;
+        string freeReply = readline("Type your reply: ");
+        cout << RESET;
+        if (freeReply.empty()) freeReply = "...";
+        cout << YELLOW << "You: " << freeReply << RESET << endl;
 
-		// easter egg line from Raze based on input
-		if (freeReply.find("?") != string::npos) {
-			cout << CYAN << "Raze: Questions later—hit the terminal first, should be around here. I’ll keep the feed hot." << RESET << endl;
-		} else if (freeReply.size() <= 6) {
-			cout << CYAN << "Raze: Short and sweet. Moving you a route ping now.\n"
-			     "You're lookin for a terminal." << RESET << endl;
-		} else {
-			cout << CYAN << "Raze: Logged. I’ll patch in updates while you move. Optics up.\n"
-			     "Got a ping on somethin in the alley!" << RESET << endl;
-		}
-	}
+        // easter egg line from Raze based on input
+        if (freeReply.find("?") != string::npos) {
+            cout << CYAN << "Raze: Questions later—hit the terminal first. I’ll keep the feed hot." << RESET << endl;
+        } else if (freeReply.size() <= 6) {
+            cout << CYAN << "Raze: Short and sweet. Moving you a route ping now." << RESET << endl;
+        } else {
+            cout << CYAN << "Raze: Logged. I’ll patch in updates while you move. Optics up." << RESET << endl;
+        }
+    }
 }
 
 //START
@@ -144,45 +142,20 @@ bool firstPuzzle() {
 	return false;
 }
 
-bool secondPuzzle() {
-	// Show scene
-	cout << WHITE << "\nYou reach a sealed door. A neon mural flickers beside the panel.\n" << RESET;
-	cout << CYAN  << "[Incoming Call: RAZE] This isn't a keypad, choom. Read the wall. Each row hides the path.\n" << RESET;
+bool RazeMissionBrief() { //change dialogue
+//	setbgcolor(40, 0, 60); // bluish pruple;
+	setbgcolor(60, 0, 50); //pinkish purple ;
+	cout << CYAN << "[Incoming Call: RAZE]\n";
+	cout << "Raze: Yo, Vex — you online ? Good. The city’s buzzin tonight, all neon wrappin straight lies in vibrant colors.\n";
+	cout << "Syntek’s messin with heads again, They got their claws deep in every brain on the block.\n";
+	cout << "Hear that Static? It's in every damn frequency. We're pullin the plug on this shit tonight.\n";
+	cout << "Heres the plan, you get in and get your hands dirty. I'll keep you from getting caught. We’re hitting Syntek Tower at it's core.\n";
+	cout << "You’ll need to break down those ICE walls, dance past the patrols, and drop the liberation virus into their mainframe.\n";
+	cout << "I'll net-guide, you ground-pound. I'll ghost our presence - got that?.\n";
+	cout  << "Remember, stay low, and don’t fry your deck." << RESET << endl;
+	setbgcolor(30, 30, 30); // dark gray
 
-	// The “image” — look for the only doubled arrow per row.
-	cout << MAGENTA <<    "\n/==================== NEON GLITCH MURAL =====================\\\n" << RESET;
-	cout << YELLOW <<    "  Row 1:   >   <  ^   <   <   V   <   <<    <   <   ^   ^   <  \n"
-	     "  Row 2:   >   >   >  >   <<   <   V   ^    >   <   >   V   V\n"
-	     "  Row 3:   v   ^   V   <   >   <   ^   >    V  ^^   >   <   <\n"
-	     "  Row 4:   ^   VV  ^   <   <   <   >   V    ^   ^   >   <   >\n"
-	     "  Row 5:   <   V   <    <    ^    ^    V    <   >  >>   <   ^\n" << RESET;
-	cout << MAGENTA <<  "\\============================================================/\n" << RESET;
-	cout << WHITE  << "Enter the 5-step path (use L/R/U/D, e.g., L R D U L or LRDUL):\n" << RESET << endl;
-
-	// Solution based on doubled arrows:
-	// Row1: <<  = L
-	// Row2: <<  = L
-	// Row3: ^^  = U
-	// Row4: VV  = D
-	// Row5: >>  = R
-	string solution = "LLUDR";
-
-	int attempts = 3;
-	for (int a = 1; a <= attempts; ++a) {
-		cout << WHITE << "Attempt " << a << "/" << attempts << " - " << RESET;
-
-		string raw;
-		getline(cin, raw);
-
-		// Normalize input to only the letters L/R/U/D (uppercase)
-		string guess;
-		for (size_t i = 0; i < raw.size(); ++i) {
-			char c = raw[i];
-			if (c >= 'a' && c <= 'z') c = c - 'a' + 'A'; // to upper
-			if (c == 'L' || c == 'R' || c == 'U' || c == 'D') {
-				guess.push_back(c);
-			}
-		}
+	cout << WHITE << "\nRun a tactical simulation of Mission 1 now? (y/n): " << RESET;
 
 		// If user entered spaces or fewer/more letters, keep only first 5 valid chars
 		if (guess.size() > 5) guess = guess.substr(0, 5);
@@ -402,25 +375,66 @@ void ViewEnemyStats(vector<Enemy> foes) {
 	}
 }
 
-void EnemyCheck(vector<Enemy> &foes) {
+void EnemyCheck(vector<Enemy> &foes, vector<Enemy> healthCheck) {
+	cout << endl;
 	for (int i = 0; i < foes.size(); i++) { //Loop checks if enemy is dead
 		if (foes.at(i).health <= 0) {
 			foes.at(i).alive = false;
-			cout << RED << "Enemy " << i + 1 << ": DEAD" << RESET << endl;
-		} else {
-			cout << RED << "Enemy " << i + 1 << ": " << foes.at(i).health << " hp" << RESET << endl;
+			cout << RED << "Enemy " << i + 1 << ": FLATLINED" << RESET << endl;
+		}
+		else {
+			cout << RED << "Enemy " << i + 1 << ": " << foes.at(i).health << " hp ";
+			if (foes.at(i).health == healthCheck.at(i).health) {
+				cout << "|====================|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 90) {
+				cout << "|==================--|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 80) {
+				cout << "|================----|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 70) {
+				cout << "|==============------|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 60) {
+				cout << "|============--------|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 50) {
+				cout << "|==========----------|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 40) {
+				cout << "|========------------|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 30) {
+				cout << "|======--------------|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 20) {
+				cout << "|====----------------|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health >= 10) {
+				cout << "|==------------------|" << RESET;
+			}
+			else if (foes.at(i).health * 100 / healthCheck.at(i).health <= 10) {
+				cout << "|=------------------|" << RESET;
+			}
+			cout << endl;
+			//cout << "TEST: " << foes.at(i).health / healthCheck.at(i).health * 100 << endl;
 		}
 	}
 }
 //=================================================================================================
 
 void BattleControls() {
+
 	cout << YELLOW << endl;
-	cout << "\t1: Use Melee\n";
-	cout << "\t2: Use Gun\n";
-	cout << "\t3: Take Cover\n";
-	cout << "\t4: CyberHack\n";
-	cout << "\t5: Analyze Enemy\n";
+	//setbgcolor(60, 60, 0);
+	cout << "\t-----------------\n";
+	cout << "\t1: Use Melee    |\n";
+	cout << "\t2: Use Gun      |\n";
+	cout << "\t3: Take Cover   |\n";
+	cout << "\t4: CyberHack    |\n";
+	cout << "\t5: Analyze Enemy|\n";
+	cout << "\t-----------------\n";
 	cout << RESET << endl;
 }
 //=================================================================================================
@@ -467,7 +481,7 @@ void BattleWon(vector<Enemy> &foes) { //If won distribute xp and raise lvl if ne
 			ViewStats(Vex); //Displays new stats
 		}
 	}
-	cout << endl;
+	cout << RESET << endl;
 }
 //=================================================================================================
 void Die() {
@@ -722,7 +736,7 @@ bool Fight(bool enemyGoesFirst) {
 
 		}
 		//=================================================================================================
-		EnemyCheck(foes); //Checks if enemy hp drops to 0 or below
+		EnemyCheck(foes, healthCheck); //Checks if enemy hp drops to 0 or below
 		for (int i = 0; i < foes.size(); i++) { //Checks if hack effects should end and then revert stats back to original
 			foesCopy.at(i).health = foes.at(i).health;
 			foesCopy.at(i).alive = foes.at(i).alive;
@@ -739,6 +753,7 @@ bool Fight(bool enemyGoesFirst) {
 			foes.at(i).notInCover = true; //Sets enemies out of cover
 		}
 		turnCount++;
+		cout << WHITE << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 		cout << endl << "Enemy Turn " << turnCount << ":\n\n";
 		//==================================================================================================
 
@@ -875,6 +890,7 @@ bool Fight(bool enemyGoesFirst) {
 
 		playerNotInCover = true;
 		battleEnds = true;
+		cout << WHITE << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 		cout << endl << "Player Turn " << turnCount << ":\n";
 		BattleControls(); //Displays Controls
 		cin >> input;
@@ -923,14 +939,10 @@ int main() {
     cout << CYAN << "[Incoming Call: RAZE]" << RESET << endl;
     cout << CYAN << "Raze: Yo, choom... you ready to dance?\n" << RESET << endl;
 	RazeReplyMenu();
-	bool puzzle = firstPuzzle();
-	if (!puzzle) return 0;
-	Fight(false); //TRUE FOR ENEMY TURN FIRST / FALSE FOR PLAYER TURN FIRST
-	puzzle = secondPuzzle();
-	Fight(true);
-	puzzle = thirdPuzzle();
-
-
+	playerGoesFirst = firstPuzzle();
+	
+	if (playerGoesFirst) { Fight(false); }//TRUE FOR ENEMY TURN FIRST / FALSE FOR PLAYER TURN FIRST
+	else { Fight(true); }                 //I WOULD CHANGE IT BUT IT WOULD BE A HASSLE AT THIS POINT OF TIME
 
 	return 0;
 }
