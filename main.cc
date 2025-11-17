@@ -927,6 +927,7 @@ int main() {
 	if (!puzzle) return 0;
 	Fight(false); //TRUE FOR ENEMY TURN FIRST / FALSE FOR PLAYER TURN FIRST
 	puzzle = secondPuzzle();
+	Fight(true);
 	puzzle = thirdPuzzle();
 
 

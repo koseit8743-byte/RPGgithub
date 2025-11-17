@@ -19,7 +19,11 @@ If the player is within a certain range (for example, within 3.0), Raze steps in
 Input and Output:
 
 All puzzles rely heavily on user input and system output.
+<<<<<<< HEAD
  Players type their answers, codes, or patterns using cin or getline(), and the program responds using cout to to display feedback, colorized dialogue, and story narration.
+=======
+ Players type their answers, codes, or patterns using cin or getline(), and the program responds using cout to display feedback, colorized dialogue, and story narration.
+>>>>>>> e376237 (README.md)
  For example, when the player enters the arrow directions in the door puzzle, the game outputs Raze’s reactions and whether the pattern was correct, creating an interactive experience.
 Branches
 Each puzzle uses branches (if, else if, and else) to determine outcomes based on the player’s choices.

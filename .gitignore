@@ -1,0 +1,46 @@
+# Compiled Object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Build folders (common names)
+build/
+bin/
+obj/
+Debug/
+Release/
+
+# IDE-specific files (e.g., Visual Studio)
+.vs/
+*.vcxproj.user
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+
+# Other temporary files
+*~
+*.bak
+*.swp
+*.tmp
