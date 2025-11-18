@@ -700,7 +700,7 @@ bool Fight(bool enemyGoesFirst) {
 			
 			//==================================================================================================
 			if (foes.at(i).alive == false) { 
-					//NEEDED SINCE if statements below will skip the statement causing them to print below
+					//STATEMENT NEEDED so the if statements in this section willed be skipped if the enemy is dead
 			}
 			else if (foes.at(i).stunned) { //If enemy is stunned 
 				cout << RED << "BZZZZT OPTICAL SYSTEM MALFUNCTION (STUNNED)\n" << RESET;
@@ -728,6 +728,21 @@ bool Fight(bool enemyGoesFirst) {
 			else if (foes.at(i).alive) { //If enemy is alive
 				if (randNum == 1) { //CyberHack
 					cout << RED << "'BZZZZT IM TERMINATING IT' (NOT IMPLEMENTED)" << RESET << endl;
+
+				
+				// TODO: HAVE TO USE AI IN MY CODE
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+				//																 AI GENERATED CODE
+				//																-------------------
+
+
+			
+
+
+
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 				}
 				//==================================================================================================
 				else if (randNum == 2 or randNum == 3) { //Taking Cover
