@@ -189,6 +189,35 @@ void CombatDialogue(bool playerAttacking, bool enemyattacking, int attackType = 
 
 }
 
+void Healthwarnings(int hp) {
+	vector<string> allhurtraze = {
+		"Raze:  whats going on? you should  take cover and fall back",
+		"Raze: I'm sensing system failure in your circuits, recalibrate!",
+		"Raze: Your viatals ar spiking!",
+		"Raze: Critical systems alert!, dont push it!!",
+		"Raze: Yo, I'm starting to loose your signal, recover NOW"
+	};
+	vector<string> allHurt = {
+		"You: Yo, raze! Systems taking critical damage!",
+		"You: That stings as bad as an electric shock!",
+		"You: I'm taking heavy damag yo, I gotta charge systems up a bit"
+	};
+
+	if (hp < 25) {
+		setbgcolor(100, 0, 0);
+		cout << YELLOW << "You: If I take another hit, i might not see that neon light again!" << RESET << endl;
+		setbgcolor(80, 20, 0);
+		cout << CYAN << "Raze: Get down, befoe you get us all ZEROED!" << RESET << endl;
+	} else if (hp < 50) {
+		int hurtrandr = rand() % allhurtraze.size();
+		int hurtrandpl = rand() % allHurt.size();
+		setbgcolor(100, 0, 0);
+		cout << YELLOW << allHurt.at(hurtrandpl) << RESET << endl;
+		setbgcolor(100, 0, 0);
+		cout << CYAN << allhurtraze.at(hurtrandr) << RESET << endl;
+
+	}
+}
 
 int main() {
 
