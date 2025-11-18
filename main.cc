@@ -313,7 +313,7 @@ void Healthwarnings(int hp) {
 		cout << YELLOW << allHurt.at(hurtrandpl) << RESET << endl;
 		setbgcolor(100, 0, 0);
 		cout << CYAN << allhurtraze.at(hurtrandr) << RESET << endl;
-
+	}
 
 }
 
