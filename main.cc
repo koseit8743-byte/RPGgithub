@@ -497,7 +497,7 @@ void BattleWon(vector<Enemy> &foes) { //If won distribute xp and raise lvl if ne
 	int lvlTimes;
 
 	cout << endl;
-	cout << YELLOW << "Vex: 'That was tooo easy'" << RESET << endl;
+	cout << YELLOW << "You: 'That was tooo easy'" << RESET << endl;
 	cout << endl;
 	cout << "BATTLE OVER:\n";
 	//Vex.xp += 25 * foes.size();
@@ -619,23 +619,23 @@ bool Fight(bool enemyGoesFirst) {
 
 				if (playerInput == i + 1) {
 					clearscreen(); //Clears the screen
-					cout << YELLOW << "Vex: 'HYAHHHHH' " << RESET;
+					cout << YELLOW << "You: 'HYAHHHHH' " << RESET;
 					if (foes.at(i).notInCover) {
 						if (randDodge <= foes.at(i).dodgeChance) {
 							cout << endl << RED << "'BZZZT EVASIVE MODE ACTIVATED' (Atk Dodged)" << RESET << endl;
 						}
 						else if (randCrit <= Vex.critChance) {
-							cout << endl << YELLOW << "Vex: 'Jackpot' (CRIT) " << RESET;
+							cout << endl << YELLOW << "You: 'Jackpot' (CRIT) " << RESET;
 							foes.at(i).health -= 2 * Vex.dmg * foes.at(i).armor; 
 							dmg = 2 * Vex.dmg * foes.at(i).armor; 
 							cout << YELLOW << "(" << dmg << "-DMG)" << RESET << endl;
-							CombatDialogue(true, false);
+							CombatDialogue(true, false, 1);
 						} 
 						else { 
 							foes.at(i).health -= Vex.dmg * foes.at(i).armor; 
 							dmg = Vex.dmg * foes.at(i).armor; 
 							cout << YELLOW << "(" << dmg << "-DMG)" << RESET << endl;
-							CombatDialogue(true, false);
+							CombatDialogue(true, false, 1);
 						}
 					}
 					else { cout << endl << RED << "'BZZT INCOMING THREATS EVADED' (IN COVER)\n" << RESET;} //Dialogue if enemy is taking cover
@@ -660,23 +660,23 @@ bool Fight(bool enemyGoesFirst) {
 				
 				if (playerInput == i + 1) {
 					clearscreen(); //Clears the screen
-					cout << YELLOW << "Vex: 'FIRIINGGG' " << RESET;
+					cout << YELLOW << "You: 'FIRIINGGG' " << RESET;
 					if (foes.at(i).notInCover) {
 						if (randDodge <= foes.at(i).dodgeChance) {
 							cout << endl << RED << "'BZZZT EVASIVE MODE ACTIVATED' (Atk Dodged)" << RESET << endl;
 						}
 						else if (randCrit <= Vex.critChance) {
-							cout << endl << YELLOW << "Vex: 'Jackpot' (CRIT) " << RESET;
+							cout << endl << YELLOW << "You: 'Jackpot' (CRIT) " << RESET;
 							foes.at(i).health -= 2 * Vex.dmg * foes.at(i).armor; 
 							dmg = 2 * Vex.dmg * foes.at(i).armor; 
 							cout << YELLOW << "(" << dmg << "-DMG)" << RESET << endl;
-							CombatDialogue(true, false);
+							CombatDialogue(true, false, 2);
 						} 
 						else { 
 							foes.at(i).health -= Vex.dmg * foes.at(i).armor; 
 							dmg = Vex.dmg * foes.at(i).armor; 
 							cout << YELLOW << "(" << dmg << "-DMG)" << RESET << endl;
-							CombatDialogue(true, false);
+							CombatDialogue(true, false, 2);
 						}
 					}
 					else { cout << endl << RED << "'BZZT INCOMING THREATS EVADED' (IN COVER)\n" << RESET;} //Dialogue if enemy is taking cover
@@ -686,8 +686,9 @@ bool Fight(bool enemyGoesFirst) {
 		//=================================================================================================
 		else if (input == "3") { //Take Cover Choice
 			clearscreen(); //Clears the screen
-			cout << YELLOW << "Vex: 'Gotta take cover'" << RESET << endl;
+			//cout << YELLOW << "You: 'Gotta take cover'" << RESET << endl;
 			playerNotInCover = false;
+			CombatDialogue(true, false, 3);
 		}
 		//=================================================================================================
 		else if (input == "4") { //CyberHack Choice
@@ -734,7 +735,7 @@ bool Fight(bool enemyGoesFirst) {
 						cin >> s;
 						cout << endl;
 						clearscreen(); //Clears the screen
-						cout << "You Hesitate or somethin" << endl;
+						cout << WHITE << "You Hesitate (TURN SKIPPED)" << RESET << endl; 
 						break; 
 					}
 					//=================================================================================================
@@ -772,8 +773,9 @@ bool Fight(bool enemyGoesFirst) {
 			//=================================================================================================
 			if (hackLanded) { 
 				clearscreen(); //Clears the screen
-				cout << YELLOW << "Vex: 'IM HACKKIN IT' (SUCCESS)\n" << RESET; 
-				cout << "Hack ends in Turn "<< turnEnemyHackEnds << ":\n";
+				cout << YELLOW << "You: 'IM HACKKIN IT' (SUCCESS)\n" << RESET; 
+				CombatDialogue(true, false, 4);
+				cout << endl << "Hack ends in Turn "<< turnEnemyHackEnds << ":\n";
 				hackLanded = false; //Resets it once used 
 			} 
 			else {
@@ -785,7 +787,8 @@ bool Fight(bool enemyGoesFirst) {
 					clearscreen(); //Clears the screen
 					EnemyCheck(foes, healthCheck);
 					ViewEnemyStats(foes);
-					cout << YELLOW << "Vex: 'Hmm I See'" << RESET << endl;
+					CombatDialogue(true, false, 5);
+					cout << endl << YELLOW << "You: 'Hmm I See'" << RESET << endl;
 					cout << endl <<  WHITE << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 					cout << "Player Turn " << turnCount << ":\n\n";
 					BattleControls(); //Displays Controls
@@ -837,7 +840,7 @@ bool Fight(bool enemyGoesFirst) {
 			
 			//==================================================================================================
 			if (foes.at(i).alive == false) { 
-					//NEEDED SINCE if statements below will skip the statement causing them to print below
+					//STATEMENT NEEDED so the if statements in this section willed be skipped if the enemy is dead
 			}
 			else if (foes.at(i).stunned) { //If enemy is stunned 
 				cout << RED << "BZZZZT OPTICAL SYSTEM MALFUNCTION (STUNNED)\n" << RESET;
@@ -865,6 +868,21 @@ bool Fight(bool enemyGoesFirst) {
 			else if (foes.at(i).alive) { //If enemy is alive
 				if (randNum == 1) { //CyberHack
 					cout << RED << "'BZZZZT IM TERMINATING IT' (NOT IMPLEMENTED)" << RESET << endl;
+
+				
+				// TODO: HAVE TO USE AI IN MY CODE
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+				//																 AI GENERATED CODE
+				//																-------------------
+
+
+			
+
+
+
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 				}
 				//==================================================================================================
 				else if (randNum == 2 or randNum == 3) { //Taking Cover
@@ -876,7 +894,7 @@ bool Fight(bool enemyGoesFirst) {
 					cout << RED << "'BZZZT TARGET FOUND: FIRING' " << RESET;
 					if (playerNotInCover) { //If player is not in cover then attack lands
 						if (randDodge <= Vex.dodgeChance) {
-							cout << YELLOW << "Vex: 'Phew, close one' (Atk Dodged)" << RESET << endl;
+							cout << YELLOW << "You: 'Phew, close one' (Atk Dodged)" << RESET << endl;
 						}
 						else if (randCrit <= foes.at(i).critChance) {
 							cout << endl << RED << "'BZZT WEAKPOINT DETECTED' (CRIT)" << RESET;
@@ -892,14 +910,14 @@ bool Fight(bool enemyGoesFirst) {
 							CombatDialogue(false, true);
 						}
 					}
-					else { cout << endl << YELLOW  << "Vex: 'Not a chance' (IN COVER)\n" << RESET;} //Dialogue if player is taking cover
+					else { cout << endl << YELLOW  << "You: 'Not a chance' (IN COVER)\n" << RESET;} //Dialogue if player is taking cover
 				}
 				//==================================================================================================
 				else { //Attacking
 					cout << RED << "'BZZZZT TARGET FOUND: ATTACKING' " << RESET;
 					if (playerNotInCover) {
 						if (randDodge <= Vex.dodgeChance) {
-							cout << YELLOW << "Vex: 'Phew, close one' (Atk Dodged)" << RESET << endl;
+							cout << YELLOW << "You: 'Phew, close one' (Atk Dodged)" << RESET << endl;
 						}
 						else if (randCrit <= foes.at(i).critChance) {
 							cout << endl << RED << "'BZZT WEAKPOINT DETECTED' (CRIT)" << RESET;
@@ -915,7 +933,7 @@ bool Fight(bool enemyGoesFirst) {
 							CombatDialogue(false, true);
 						}
 					}
-					else { cout << endl << YELLOW << "Vex: 'Not a chance' (IN COVER)\n" << RESET;} //Dialogue if player is taking cover
+					else { cout << endl << YELLOW << "You: 'Not a chance' (IN COVER)\n" << RESET;} //Dialogue if player is taking cover
 				}
 				//==================================================================================================
 			}
@@ -948,7 +966,7 @@ bool Fight(bool enemyGoesFirst) {
 		
 		EnemyCheck(foes, healthCheck);
 		if (hp <= 0) { hp = 0; }
-			cout << YELLOW << "Vex: " << GREEN << hp << " hp "; //Test
+			cout << YELLOW << "You: " << GREEN << hp << " hp "; //Test
 			if (hp == Vex.health) {
 				setbgcolor(0, 60, 0);
 				cout << "|====================|" << RESET;
@@ -997,7 +1015,8 @@ bool Fight(bool enemyGoesFirst) {
 				setbgcolor(90, 0, 0);
 				cout << "|--------------------|" << RESET;
 			}
-			cout << endl;
+			cout << endl << endl;
+			Healthwarnings(hp);
 		//Win/loss conditions
 		if (hp <= 0) { //If Player dies
 			//return false;a

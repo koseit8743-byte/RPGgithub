@@ -444,6 +444,22 @@ bool Fight(bool enemyGoesFirst) {
 					cin >> input;
 					continue;
 		}
+		//=================================================================================================
+	
+
+		else if (input == "6") {                 //TODO: MAKE HEALTH PACKS
+			else if (hp * 100 / Vex.health >= 80 and hp * 100 / Vex.health < 100) {
+				cout << YELLOW << "Vex: 'Feel my life slippin. Needa recover.'" << RESET << endl;
+			}
+			else if (hp * 100 / Vex.health <= 30) {
+				cout << YELLOW << "Vex: 'Feel my life slippin. Needa recover.'" << RESET << endl;
+			}
+
+
+
+		}
+
+		//=================================================================================================
 		else { cout << WHITE << "You Hesitate (TURN SKIPPED)" << RESET << endl; }
 	//End of Player Turn	
 	
@@ -513,6 +529,64 @@ bool Fight(bool enemyGoesFirst) {
 			else if (foes.at(i).alive) { //If enemy is alive
 				if (randNum == 1) { //CyberHack
 					cout << RED << "'BZZZZT IM TERMINATING IT' (NOT IMPLEMENTED)" << RESET << endl;
+				
+
+
+				// TODO: HAVE TO USE AI IN MY CODE
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+				//																 AI GENERATED CODE
+				//																-------------------
+				
+				/*
+				// AI GENERATED CODE: CyberHack special system
+				cout << RED << "'BZZZZT CYBERNETIC BREACH INITIATED'" << RESET << endl;
+
+				// Randomly choose between EMP Wave or Neural Virus
+				int hackChoice = rand() % 2; // 0 = EMP Wave, 1 = Neural Virus
+
+				if (hackChoice == 0) {
+    				// EMP Wave: disables Shoot and CyberHack for next turn
+    				cout << RED << ">>> EMP WAVE DEPLOYED! Player systems offline..." << RESET << endl;
+    				Vex.empDisabled = true; // flag to disable actions
+    				Vex.empTurns = 1;       // lasts 1 turn
+				}
+				else {
+    				// Neural Virus: siphons a random stat for 3 turns
+    				cout << RED << ">>> NEURAL VIRUS UPLOADED! Player stats compromised..." << RESET << endl;
+    				int siphonChoice = rand() % 3; // 0 = attack, 1 = defense, 2 = dodge
+    				Vex.virusTurns = 3;            // lasts 3 turns
+
+    				switch (siphonChoice) {
+        				case 0:
+            				cout << RED << ">>> Player attack power reduced (-5 ATK)" << RESET << endl;
+            				Vex.dmg -= 5;
+            				if (Vex.dmg < 0) Vex.dmg = 0;
+            				Vex.virusType = 0;
+            				break;
+        				case 1:
+            				cout << RED << ">>> Player armor weakened (-5 DEF)" << RESET << endl;
+            				Vex.armor -= 5;
+            				if (Vex.armor < 1) Vex.armor = 1;
+            				Vex.virusType = 1;
+            				break;
+        				case 2:
+            				cout << RED << ">>> Player reflexes scrambled (-10 Dodge Chance)" << RESET << endl;
+            				Vex.dodgeChance -= 10;
+            				if (Vex.dodgeChance < 0) Vex.dodgeChance = 0;
+            				Vex.virusType = 2;
+     	      				break;
+    				}
+				}
+
+			
+				*/ 
+
+
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+				
+
+
 				}
 				//==================================================================================================
 				else if (randNum == 2 or randNum == 3) { //Taking Cover
