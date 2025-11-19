@@ -18,7 +18,7 @@ struct Player {
 	int ram = 2;
 	int critChance = 10;
 	int dodgeChance = 5;
-	float armor = 1.00; //DMG REDUCTION DO NOT RAISE TO BUFF, INSTEAD LOWER
+	float armor = 0.90; //DMG REDUCTION DO NOT RAISE TO BUFF, INSTEAD LOWER
 };
 
 Player Vex; //<-------- Player
@@ -184,7 +184,12 @@ void BattleWon(vector<Enemy> &foes) { //If won distribute xp and raise lvl if ne
 				Vex.dodgeChance += 5;
 			}
 			else if (playerChoice == 6) {
+				if (Vex.armor < 0.12) {
+					cout << "Max armor achieved, stat wasted.\n";
+				}
+				else {
 				Vex.armor -= 0.02;
+				}
 			}
 		
 			ViewStats(Vex); //Displays new stats
@@ -212,11 +217,10 @@ bool Fight(bool enemyGoesFirst) {
 	int turnPlayerHackEnds; //Holds the value(turn) in which the hack should end
 	int turnEnemyHackEnds;  //
 	string input; // 1 2 3 4 or 5
-	bool playerNotInCover = true;
-	bool playerIsStunned = false;
-	bool playerIsHacked = false;
-	bool hackLanded = false;
-	bool battleEnds = true;
+	bool playerNotInCover = true; 
+	bool playerIsStunned = false; 
+	bool hackLanded = false; //Turns true if 
+	bool battleEnds = true; //Turns false if at least one enemy is still alive
 	
     //movecursor(0,0);
 
@@ -244,7 +248,23 @@ bool Fight(bool enemyGoesFirst) {
 		//cout << "At top of turn (TEST)\n"; //Test
 	if (enemyGoesFirst == true and turnCount == 1) {
 	} // Skips players turn if enemy goes first is true and it is turn 1
-		
+
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+				//																 AI GENERATED CODE
+				//																-------------------
+				// Handle stun effect
+	else if (playerIsStunned) {
+		clearscreen(); //Clears the screen
+		cout << YELLOW << "Vex: 'I...CAN'T...MOVE!'" << RESET <<  endl;
+    	cout << WHITE << ">>> You are stunned and cannot act this turn!" << RESET << endl;
+        	playerIsStunned = false; //Resets the bool back to false
+    	// Skip player action entirely
+	}
+
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+	
 	else {
 		//BattleControls(); //Displays Controls
 		//cin >> input;
@@ -448,15 +468,26 @@ bool Fight(bool enemyGoesFirst) {
 	
 
 		else if (input == "6") {                 //TODO: MAKE HEALTH PACKS
+			clearscreen(); //Clears the screen
+			if (hp == Vex.health) {
+				cout << YELLOW << "You: 'Already in peak condition. Can't be wasting my time like this.'" << RESET << endl;
+				BattleControls(); //Displays Controls
+				cin >> input;
+				continue;
+			}
 			else if (hp * 100 / Vex.health >= 80 and hp * 100 / Vex.health < 100) {
-				cout << YELLOW << "Vex: 'Feel my life slippin. Needa recover.'" << RESET << endl;
+				cout << YELLOW << "Vex: 'Barely bruised, but I ain't taken any chance. Gotta heal.'" << RESET << endl;
 			}
-			else if (hp * 100 / Vex.health <= 30) {
-				cout << YELLOW << "Vex: 'Feel my life slippin. Needa recover.'" << RESET << endl;
+			else if (hp * 100 / Vex.health >= 50) {
+				cout << YELLOW << "Vex: 'These gonks got my chrome scratched up, gotta make them pay. Just needa recover first.'" << RESET << endl;
 			}
-
-
-
+			else {
+				cout << YELLOW << "Vex: 'Feel my life slippin away. Needa recover.'" << RESET << endl;
+			}
+			hp += 20; //Adds 20 more hp
+			if (hp >= Vex.health) { //If hp exceeds max then drop back down to max
+				hp = Vex.health;
+			}
 		}
 
 		//=================================================================================================
@@ -536,52 +567,13 @@ bool Fight(bool enemyGoesFirst) {
 				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 				//																 AI GENERATED CODE
 				//																-------------------
-				
-				/*
-				// AI GENERATED CODE: CyberHack special system
+				// AI GENERATED CODE: CyberHack simplified to stun
 				cout << RED << "'BZZZZT CYBERNETIC BREACH INITIATED'" << RESET << endl;
+				cout << WHITE << ">>> Player systems overloaded! Stunned for 1 turn." << RESET << endl;
 
-				// Randomly choose between EMP Wave or Neural Virus
-				int hackChoice = rand() % 2; // 0 = EMP Wave, 1 = Neural Virus
+				playerIsStunned = true;   // flag player as stunned
 
-				if (hackChoice == 0) {
-    				// EMP Wave: disables Shoot and CyberHack for next turn
-    				cout << RED << ">>> EMP WAVE DEPLOYED! Player systems offline..." << RESET << endl;
-    				Vex.empDisabled = true; // flag to disable actions
-    				Vex.empTurns = 1;       // lasts 1 turn
-				}
-				else {
-    				// Neural Virus: siphons a random stat for 3 turns
-    				cout << RED << ">>> NEURAL VIRUS UPLOADED! Player stats compromised..." << RESET << endl;
-    				int siphonChoice = rand() % 3; // 0 = attack, 1 = defense, 2 = dodge
-    				Vex.virusTurns = 3;            // lasts 3 turns
-
-    				switch (siphonChoice) {
-        				case 0:
-            				cout << RED << ">>> Player attack power reduced (-5 ATK)" << RESET << endl;
-            				Vex.dmg -= 5;
-            				if (Vex.dmg < 0) Vex.dmg = 0;
-            				Vex.virusType = 0;
-            				break;
-        				case 1:
-            				cout << RED << ">>> Player armor weakened (-5 DEF)" << RESET << endl;
-            				Vex.armor -= 5;
-            				if (Vex.armor < 1) Vex.armor = 1;
-            				Vex.virusType = 1;
-            				break;
-        				case 2:
-            				cout << RED << ">>> Player reflexes scrambled (-10 Dodge Chance)" << RESET << endl;
-            				Vex.dodgeChance -= 10;
-            				if (Vex.dodgeChance < 0) Vex.dodgeChance = 0;
-            				Vex.virusType = 2;
-     	      				break;
-    				}
-				}
-
-			
-				*/ 
-
-
+				
 
 				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 				

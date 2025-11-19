@@ -1,7 +1,9 @@
 # RPGgithub
 RPG project
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Combat 
-Romero
+- Romero
 
 1.Variables
     -I am using numerous amount of variables such as (ints,bools,floats) to hold player data in my struct which define how the character could be used in battle such as
@@ -79,4 +81,5 @@ Romero
     to print all the enemies characteristics as of currently in battle. This matters so far since the enemies stats are unknown to the player until they access this
     function. From there they can decide if whether they need to cyberhack the enemy to armor strip them, or stun them if they have way too much damage to handle.
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

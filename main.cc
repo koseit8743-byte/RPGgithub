@@ -1,6 +1,6 @@
 //Fill out this comment with your names and which bullet points you did
-//Partners: Kwabe
-//Bullet Points:
+//Partners: Rangel, Romero, Deraffaele, Kwabe
+//Bullet Points: 1, 2, 3, 4, 5
 //Extra Credit:
 //URL to cover art and music:
 #include "/public/read.h"
@@ -13,7 +13,7 @@
 #include <unistd.h>
 using namespace std;
 
-//COLOR MAP: Player=YELLOW Raze=CYAN Enemy=RED Basic=WHITE
+//COLOR MAP: Player=YELLOW, Raze=CYAN, Enemy=RED, Basic=WHITE, (Health/allied enemies/lvl ups/etc.)=GREEN
 /// movecursor(5, 20);
 // setcolor(6, 7, 67);
 // setbgcolor(67, 67, 67);
@@ -364,16 +364,19 @@ struct Enemy {
 	bool controlled;
 };
 
-void SetEnemies(vector<Enemy> &foes) {
-	int randLvl, randDmg, randHealth, randRam, randCrit, randDodge , randEnemies;
+void SetEnemies(vector<Enemy> &foes, bool boss) { //Function used to set the characteristics of the enemies
+	int randLvl, randDmg, randHealth, randRam, randCrit, randDodge , randEnemies; //Variables used to randomize stats
 	float randArmor;
 
 	cout << fixed << setprecision(2);
 	//Enemy bot{1, 5, 10, 3, 10, 5, 1.00, true, true, 0, false, false, false}; //Sets Enemy stats
 	//Enemy bot{randLvl, randDmg, randHealth, randRam, randCrit, randDodge, randArmor, true, true, 0, false, false, false}; //Sets Enemy stats
 	//Enemy bot{1, 75, 150, 9, 50, 5, 0.50, true, true, 0, false, false, false}; // BUFFED OUT ENEMY
-	//Enemy bot{1, 75, 150, 9, 50, 5, 0.50, true, true, 0, false, false, false}; // BUFFED OUT ENEMY
-	if (Vex.level <= 4) { //Adds an enemy based on level
+	if (boss){
+		Enemy boss{30, 75, 150, 9, 50, 5, 0.50, true, true, 0, false, false, false}; // BUFFED OUT ENEMY
+		foes.push_back(boss);
+	}
+	else if (Vex.level <= 4) { //Adds an enemy based on level
 		randEnemies = rand() % 2 + 1;
 		for (int i = 0; i < randEnemies; i++) {
 			randLvl = rand() % 5 + 1;
@@ -412,7 +415,7 @@ void SetEnemies(vector<Enemy> &foes) {
 }
 //=================================================================================================
 
-void ViewEnemyStats(vector<Enemy> foes) {
+void ViewEnemyStats(vector<Enemy> foes) { 
 	for (int i = 0; i < foes.size(); i++) {
 		cout << RED << endl;
 		cout << "Enemy " << i + 1 << ":\n";
@@ -480,12 +483,13 @@ void BattleControls() {
 
 	cout << YELLOW << endl;
 	//setbgcolor(60, 60, 0);
-	cout << "\t-----------------\n";
-	cout << "\t1: Use Melee    |\n";
-	cout << "\t2: Use Gun      |\n";
-	cout << "\t3: Take Cover   |\n";
-	cout << "\t4: CyberHack    |\n";
-	cout << "\t5: Analyze Enemy|\n";
+	cout << "\t-----------------          Player stats:\n";
+	cout << "\t1: Use Melee    |          ---------------\n";
+	cout << "\t2: Use Gun      |          DMG: " << Vex.dmg << "\n";
+	cout << "\t3: Take Cover   |          MAX HEALTH: " << Vex.health << "\n";
+	cout << "\t4: CyberHack    |          RAM: " << Vex.ram << "\n";
+	cout << "\t5: Analyze Enemy|          ARMOR: " << abs(Vex.armor * 100 - 100) << "%\n";
+	cout << "\t6: Recover HP   |\n";
 	cout << "\t-----------------\n";
 	cout << RESET << endl;
 }
@@ -532,7 +536,12 @@ void BattleWon(vector<Enemy> &foes) { //If won distribute xp and raise lvl if ne
 				Vex.dodgeChance += 5;
 			}
 			else if (playerChoice == 6) {
+				if (Vex.armor < 0.12) { //Ensures that the float doesnt eventually become a negative and breaks code logic
+					cout << "Max armor achieved, stat wasted.\n";
+				}
+				else {
 				Vex.armor -= 0.02;
+				}
 			}
 		
 			ViewStats(Vex); //Displays new stats
@@ -541,13 +550,13 @@ void BattleWon(vector<Enemy> &foes) { //If won distribute xp and raise lvl if ne
 	cout << RESET << endl;
 }
 //=================================================================================================
-void Die() {
+void Die() { //IF player Dies
 	cout << BLUE << "You Flatlined." << RESET << endl;
-	exit(0);
+	exit(0); //Ends the program
 }
                                     //START OF COMBAT 
 //=================================================================================================
-bool Fight(bool enemyGoesFirst) {
+bool Fight(bool enemyGoesFirst, bool bossFight) {
 	int hp = Vex.health; //Sets players new health for every battle
 	int dmg; //Used to print out dmg output for enemy and player
 	int randNum;
@@ -555,16 +564,14 @@ bool Fight(bool enemyGoesFirst) {
 	int randDodge;
 	int randHack;
 	int randControl;
-	int playerInput, secondInput;
+	int playerInput, secondInput; //first variable for choosing target/ second variable specifically for hack options
 	int turnCount = 1; //Iterator / turn count
-	int turnPlayerHackEnds; //Holds the value(turn) in which the hack should end
-	int turnEnemyHackEnds;  //
+	int turnEnemyHackEnds;  //Holds the value(turn) in which the hack should end
 	string input; // 1 2 3 4 or 5
-	bool playerNotInCover = true;
-	bool playerIsStunned = false;
-	bool playerIsHacked = false;
-	bool hackLanded = false;
-	bool battleEnds = true;
+	bool playerNotInCover = true; //Turns false if player chooses to enter cover
+	bool playerIsStunned = false; //turns true based on enemy hack action
+	bool hackLanded = false; //Turns true based on variable randHack
+	bool battleEnds = true; //Turns false if an enemy is still alive
 	
 	if (enemyGoesFirst) { cout << RED << "ENEMY GOES FIRST\n" << RESET; } //Test to see if enemy is supposed to go first or not
 	else { cout << GREEN << "PLAYER GOES FIRST\n" << RESET; }
@@ -572,7 +579,7 @@ bool Fight(bool enemyGoesFirst) {
 	cout << endl;
 	//Enemy bot{1, 5, 10, 3, 10, 5, 1.00, true, true}; //Sets Enemy stats
 	vector<Enemy> foes;   //Holds the foes in battle
-	SetEnemies(foes);     //Sets Amount of foes through function
+	SetEnemies(foes, bossFight);     //Sets Amount of foes through function
 	vector<Enemy> foesCopy = foes; //Use to reset the stats back to original
 	vector<Enemy> healthCheck = foes; //Use to compare original health to current
 	
@@ -591,6 +598,22 @@ bool Fight(bool enemyGoesFirst) {
 	if (enemyGoesFirst == true and turnCount == 1) {
 	} // Skips players turn if enemy goes first is true and it is turn 1
 		
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+				//																 AI GENERATED CODE
+				//																-------------------
+				// Handle stun effect
+	else if (playerIsStunned) {
+		clearscreen(); //Clears the screen
+		cout << YELLOW << "Vex: 'I...CAN'T...MOVE!' (STUNNED)" << RESET <<  endl;
+    	cout << WHITE << ">>> You are stunned and cannot act this turn!" << RESET << endl;
+        	playerIsStunned = false; //Resets the bool back to false
+    	// Skip player action entirely
+	}
+
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+	
 	else {
 		//BattleControls(); //Displays Controls
 		//cin >> input;
@@ -608,9 +631,9 @@ bool Fight(bool enemyGoesFirst) {
 			cin >> playerInput;
 			for (int i = 0; i < foes.size(); i++) {
 				if (!cin) {  //IF INPUT IS NOT AN INTEGER           //TODO I NEEEEED HELP WIT DIS IT DONT WORK
-					cin.clear();
-					string s;
-					cin >> s;
+					cin.clear(); //throws away the variable
+					string s;   //New variable type
+					cin >> s;	//Stores the input into new variable
 					cout << endl;
 					clearscreen(); //Clears the screen
 					cout << "You Hesitate or somethin" << endl;
@@ -795,6 +818,33 @@ bool Fight(bool enemyGoesFirst) {
 					cin >> input;
 					continue;
 		}
+		//=================================================================================================
+	
+
+		else if (input == "6") {                 //TODO: MAKE HEALTH PACKS
+			clearscreen(); //Clears the screen
+			if (hp == Vex.health) {
+				cout << YELLOW << "You: 'Already in peak condition. Can't be wasting my time like this.'" << RESET << endl;
+				BattleControls(); //Displays Controls
+				cin >> input;
+				continue;
+			}
+			else if (hp * 100 / Vex.health >= 80 and hp * 100 / Vex.health < 100) {
+				cout << YELLOW << "Vex: 'Barely bruised, but I ain't taken any chance. Gotta heal.'" << RESET << endl;
+			}
+			else if (hp * 100 / Vex.health >= 50) {
+				cout << YELLOW << "Vex: 'These gonks got my chrome scratched up, gotta make them pay. Just needa recover first.'" << RESET << endl;
+			}
+			else {
+				cout << YELLOW << "Vex: 'Feel my life slippin away. Needa recover.'" << RESET << endl;
+			}
+			hp += 20; //Adds 20 more hp
+			if (hp >= Vex.health) { //If hp exceeds max then drop back down to max
+				hp = Vex.health;
+			}
+		}
+		//=================================================================================================
+
 		else { 
 			clearscreen(); //Clears the screen
 			cout << WHITE << "You Hesitate (TURN SKIPPED)" << RESET << endl; 
@@ -806,7 +856,7 @@ bool Fight(bool enemyGoesFirst) {
 		//=================================================================================================
 		EnemyCheck(foes, healthCheck); //Checks if enemy hp drops to 0 or below
 		for (int i = 0; i < foes.size(); i++) { //Checks if hack effects should end and then revert stats back to original
-			foesCopy.at(i).health = foes.at(i).health;
+			foesCopy.at(i).health = foes.at(i).health; 
 			foesCopy.at(i).alive = foes.at(i).alive;
 			foesCopy.at(i).notInCover = foes.at(i).notInCover;
 			
@@ -867,19 +917,16 @@ bool Fight(bool enemyGoesFirst) {
 			//==================================================================================================
 			else if (foes.at(i).alive) { //If enemy is alive
 				if (randNum == 1) { //CyberHack
-					cout << RED << "'BZZZZT IM TERMINATING IT' (NOT IMPLEMENTED)" << RESET << endl;
 
 				
 				// TODO: HAVE TO USE AI IN MY CODE
 				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 				//																 AI GENERATED CODE
 				//																-------------------
+				cout << RED << "'BZZZZT CYBERNETIC BREACH INITIATED'" << RESET << endl;
+				cout << WHITE << ">>> Player systems overloaded! Stunned for 1 turn." << RESET << endl;
 
-
-			
-
-
-
+				playerIsStunned = true;   // flag player as stunned
 
 				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -1084,8 +1131,8 @@ int main() {
 	RazeReplyMenu();
 	playerGoesFirst = firstPuzzle();
 	
-	if (playerGoesFirst) { Fight(false); }//TRUE FOR ENEMY TURN FIRST / FALSE FOR PLAYER TURN FIRST
-	else { Fight(true); }                 //I WOULD CHANGE IT BUT IT WOULD BE A HASSLE AT THIS POINT OF TIME
+	if (playerGoesFirst) { Fight(false, false); }//(TRUE FOR ENEMY TURN FIRST / FALSE FOR PLAYER TURN FIRST, TRUE FOR BOSS FIGHT) 
+	else { Fight(true, false); }                 //I WOULD CHANGE IT BUT IT WOULD BE A HASSLE AT THIS POINT OF TIME
 	return 0;
 
     return 0;
