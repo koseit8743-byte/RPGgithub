@@ -18,7 +18,7 @@ struct Player {
 	int ram = 2;
 	int critChance = 10;
 	int dodgeChance = 5;
-	float armor = 1.00; //DMG REDUCTION DO NOT RAISE TO BUFF, INSTEAD LOWER
+	float armor = 0.90; //DMG REDUCTION DO NOT RAISE TO BUFF, INSTEAD LOWER
 };
 
 Player Vex; //<-------- Player
@@ -184,7 +184,12 @@ void BattleWon(vector<Enemy> &foes) { //If won distribute xp and raise lvl if ne
 				Vex.dodgeChance += 5;
 			}
 			else if (playerChoice == 6) {
+				if (Vex.armor < 0.12) {
+					cout << "Max armor achieved, stat wasted.\n";
+				}
+				else {
 				Vex.armor -= 0.02;
+				}
 			}
 		
 			ViewStats(Vex); //Displays new stats
@@ -212,11 +217,10 @@ bool Fight(bool enemyGoesFirst) {
 	int turnPlayerHackEnds; //Holds the value(turn) in which the hack should end
 	int turnEnemyHackEnds;  //
 	string input; // 1 2 3 4 or 5
-	bool playerNotInCover = true;
-	bool playerIsStunned = false;
-	bool playerIsHacked = false;
-	bool hackLanded = false;
-	bool battleEnds = true;
+	bool playerNotInCover = true; 
+	bool playerIsStunned = false; 
+	bool hackLanded = false; //Turns true if 
+	bool battleEnds = true; //Turns false if at least one enemy is still alive
 	
     //movecursor(0,0);
 
@@ -244,7 +248,23 @@ bool Fight(bool enemyGoesFirst) {
 		//cout << "At top of turn (TEST)\n"; //Test
 	if (enemyGoesFirst == true and turnCount == 1) {
 	} // Skips players turn if enemy goes first is true and it is turn 1
-		
+
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+				//																 AI GENERATED CODE
+				//																-------------------
+				// Handle stun effect
+	else if (playerIsStunned) {
+		clearscreen(); //Clears the screen
+		cout << YELLOW << "Vex: 'I...CAN'T...MOVE!'" << RESET <<  endl;
+    	cout << WHITE << ">>> You are stunned and cannot act this turn!" << RESET << endl;
+        	playerIsStunned = false; //Resets the bool back to false
+    	// Skip player action entirely
+	}
+
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+	
 	else {
 		//BattleControls(); //Displays Controls
 		//cin >> input;
@@ -444,6 +464,33 @@ bool Fight(bool enemyGoesFirst) {
 					cin >> input;
 					continue;
 		}
+		//=================================================================================================
+	
+
+		else if (input == "6") {                 //TODO: MAKE HEALTH PACKS
+			clearscreen(); //Clears the screen
+			if (hp == Vex.health) {
+				cout << YELLOW << "You: 'Already in peak condition. Can't be wasting my time like this.'" << RESET << endl;
+				BattleControls(); //Displays Controls
+				cin >> input;
+				continue;
+			}
+			else if (hp * 100 / Vex.health >= 80 and hp * 100 / Vex.health < 100) {
+				cout << YELLOW << "Vex: 'Barely bruised, but I ain't taken any chance. Gotta heal.'" << RESET << endl;
+			}
+			else if (hp * 100 / Vex.health >= 50) {
+				cout << YELLOW << "Vex: 'These gonks got my chrome scratched up, gotta make them pay. Just needa recover first.'" << RESET << endl;
+			}
+			else {
+				cout << YELLOW << "Vex: 'Feel my life slippin away. Needa recover.'" << RESET << endl;
+			}
+			hp += 20; //Adds 20 more hp
+			if (hp >= Vex.health) { //If hp exceeds max then drop back down to max
+				hp = Vex.health;
+			}
+		}
+
+		//=================================================================================================
 		else { cout << WHITE << "You Hesitate (TURN SKIPPED)" << RESET << endl; }
 	//End of Player Turn	
 	
@@ -513,6 +560,25 @@ bool Fight(bool enemyGoesFirst) {
 			else if (foes.at(i).alive) { //If enemy is alive
 				if (randNum == 1) { //CyberHack
 					cout << RED << "'BZZZZT IM TERMINATING IT' (NOT IMPLEMENTED)" << RESET << endl;
+				
+
+
+				// TODO: HAVE TO USE AI IN MY CODE
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+				//																 AI GENERATED CODE
+				//																-------------------
+				// AI GENERATED CODE: CyberHack simplified to stun
+				cout << RED << "'BZZZZT CYBERNETIC BREACH INITIATED'" << RESET << endl;
+				cout << WHITE << ">>> Player systems overloaded! Stunned for 1 turn." << RESET << endl;
+
+				playerIsStunned = true;   // flag player as stunned
+
+				
+
+				//* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+				
+
+
 				}
 				//==================================================================================================
 				else if (randNum == 2 or randNum == 3) { //Taking Cover

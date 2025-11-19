@@ -21,9 +21,10 @@ Each puzzle is written as its own function, keeping the program organized and mo
  Examples include firstuzzle(), secondPuzzle(), and thirdPuzzle().
  Every function handles its own input, logic, and output, returning true or false depending on success or failure.
  This structure allows the puzzles to be called in sequence during the main mission, making the program easier to test, expand, and maintain.
-=======
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Combat 
-Romero
+- Romero
 
 1.Variables
     -I am using numerous amount of variables such as (ints,bools,floats) to hold player data in my struct which define how the character could be used in battle such as
@@ -100,4 +101,6 @@ Romero
     This is a short but simple function that is used when the player wants to do Action 5 (Analyze Enemy) in which this is called in the combat systems function
     to print all the enemies characteristics as of currently in battle. This matters so far since the enemies stats are unknown to the player until they access this
     function. From there they can decide if whether they need to cyberhack the enemy to armor strip them, or stun them if they have way too much damage to handle.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
