@@ -611,19 +611,7 @@ bool fifthPuzzle() {
         }
     }
 
-    // --- Results ---
-    cout << WHITE << "\n*Neural link flickers...*" << RESET << endl;
-    printMentalBar();
-
-    if (score >= 2 && mental > 0) {
-        cout << CYAN << "Raze: Holy hell, you did it. You out-thought the machine." << RESET << endl;
-        cout << WHITE << "System: COGNITIVE FIREWALL DEACTIVATED. ACCESS GRANTED.\n" << RESET;
-    } else {
-        cout << CYAN << "Raze: System fried your logic chips, choom. We’ll need another approach next time." << RESET << endl;
-        cout << WHITE << "System: MIND LOCK INITIATED. ACCESS DENIED.\n" << RESET;
-    }
-}
-out << WHITE << "\n*Neural link flickers...*" << RESET << endl;
+	cout << WHITE << "\n*Neural link flickers...*" << RESET << endl;
     printMentalBar();
 
     if (score >= 2 && mental > 0) {
