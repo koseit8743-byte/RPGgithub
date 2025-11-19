@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <unistd.h>
+#include <string>
 using namespace std;
 
 //COLOR MAP: Player=YELLOW Raze=CYAN Enemy=RED Basic=WHITE
@@ -16,6 +17,28 @@ using namespace std;
 // setbgcolor(67, 67, 67);
 // set_raw_mode(true);
 //char ch =
+
+
+
+// --- AI GENERATED SECTION START ---
+// Helper function to align dialogue left (enemy) or right (player/raze)
+
+using namespace std;
+#define TERM_WIDTH 189     // AI suggest : 80, I adjusted it to 189   // adjust to your terminal width                                                                                                                                                                                                                                                 
+static void print_dialogue(const string& speaker, const string& line, const string& color) {
+	string full = speaker + ": " + line;
+
+	if (speaker == "Enemy" || speaker.find("SYNTEX") != string::npos) {
+		// Enemy dialogue: left aligned
+		cout << color << full << RESET << endl;
+	} else {
+		// Player or Raze dialogue: right aligned
+		int spaces = TERM_WIDTH - full.size();
+		if (spaces < 0) spaces = 0;
+		cout << string(spaces, ' ') << color << full << RESET << endl;
+	}
+}
+// --- AI GENERATED SECTION END ---
 
 //START
 bool RazeMissionBrief() { //change dialogue
@@ -39,11 +62,13 @@ bool RazeMissionBrief() { //change dialogue
 	while (!ans.empty() && (ans.back() == ' ' || ans.back() == '\t' || ans.back() == '\r')) ans.pop_back();
 	setbgcolor(30, 30, 30);
 	if (!ans.empty() && (ans[0] == 'Y' || ans[0] == 'y')) {
-		cout << YELLOW << "You: Plugged in. Running the BD now.\n" << RESET;
+		// ORIGINAL CODE cout << YELLOW << "You: Plugged in. Running the BD now.\n" << RESET;
+		/* AI GENERATED CODE*/  print_dialogue("You", "Plugged in. Running the BD now.", YELLOW);
 		return true;
 	} else {
 		setbgcolor(30, 30, 30);
-		cout << CYAN << "Raze: Your loss, choom.\n" << RESET;
+		//ORIGINAL CODE cout << CYAN << "Raze: Your loss, choom.\n" << RESET;
+		/* AI GENERATED CODE*/ 	print_dialogue("Raze", "Your loss, choom.", CYAN);
 		return false;
 	}
 }
@@ -134,7 +159,9 @@ void CombatDialogue(bool playerAttacking, bool enemyattacking, int attackType = 
 			int razeIndex = rand() % RazeCoverResponse.size();
 
 			setbgcolor(40, 0, 80);
-			cout << YELLOW << takecover.at(coverrand) << RESET << endl;
+			//ORIGINAL CODE:	cout << YELLOW << takecover.at(coverrand) << RESET << endl;
+			/* AI GENERATED CODE */print_dialogue("You", takecover.at(coverrand), YELLOW);
+
 			cout << CYAN << RazeCoverResponse.at(razeIndex) << RESET << endl;
 			setbgcolor(0, 0, 0);
 		}
@@ -180,10 +207,12 @@ void CombatDialogue(bool playerAttacking, bool enemyattacking, int attackType = 
 
 	if (enemyattacking) {
 		int enemyrand = rand() % enemyresponse.size();
-		cout << RED << enemyresponse.at(enemyrand) << endl;
+		//ORIGINAL CODE	cout << RED << enemyresponse.at(enemyrand) << endl;
+		/*AI GENERATED CODE*/     print_dialogue("Enemy", enemyresponse.at(enemyrand), RED);
 
 		int razeresponse = rand() % enemyattackRaze.size();
-		cout << CYAN << enemyattackRaze.at(razeresponse) << endl;
+		//ORIGINALCODE : cout << CYAN << enemyattackRaze.at(razeresponse) << endl;
+		/* AI GENERATED CODE*/  print_dialogue("Raze", enemyattackRaze.at(razeresponse), CYAN);
 
 	}
 
@@ -212,9 +241,13 @@ void Healthwarnings(int hp) {
 		int hurtrandr = rand() % allhurtraze.size();
 		int hurtrandpl = rand() % allHurt.size();
 		setbgcolor(100, 0, 0);
-		cout << YELLOW << allHurt.at(hurtrandpl) << RESET << endl;
+		//ORIGINAL CODE : cout << YELLOW << allHurt.at(hurtrandpl) << RESET << endl;
+		/* AI GENERATED CODE*/ print_dialogue("You", allHurt.at(hurtrandpl), YELLOW);
+
 		setbgcolor(100, 0, 0);
-		cout << CYAN << allhurtraze.at(hurtrandr) << RESET << endl;
+		//ORIGINAL CODE:cout << CYAN << allhurtraze.at(hurtrandr) << RESET << endl;
+		/*AI Generated Code*/ print_dialogue("Raze", allhurtraze.at(hurtrandr), CYAN);
+
 
 	}
 }
