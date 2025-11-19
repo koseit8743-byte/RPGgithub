@@ -25,7 +25,6 @@ using namespace std;
 // set_raw_mode(true);
 //char ch =
 
-
 bool RazeMissionBrief() {//change dialogue
 	cout << CYAN << "[Incoming Call: RAZE]\n"
 	     << "Raze: Yo, Vex — you online ? Good. The city’s humming tonight, all neon and lies.\n"
@@ -141,23 +140,48 @@ bool firstPuzzle() {
 	cout << CYAN << "Raze: Damnit, they locked it. Patrol spotted you on the cameras. Be ready for some action!" << RESET << endl;
 	return false;
 }
+//-----------------------------------------------------------------------------------------------------------------------------
+//MISSING CODE
+bool secondPuzzle() {
+	// Show scene
+	cout << WHITE << "\nYou reach a sealed door. A neon mural flickers beside the panel.\n" << RESET;
+	cout << CYAN  << "[Incoming Call: RAZE] This isn't a keypad, choom. Read the wall. Each row hides the path.\n" << RESET;
 
-bool RazeMissionBrief() { //change dialogue
-//	setbgcolor(40, 0, 60); // bluish pruple;
-//	setbgcolor(60, 0, 50); //pinkish purple ;
-	setbgcolor(0, 0, 80);
-	cout << CYAN << "[Incoming Call: RAZE]\n"
-	     << "Raze: Yo, Vex — you online ? Good. The city's buzzin tonight, all neon wrappin straight lies in vibrant colors.\n"
-	     << "Syntek's messin with heads again, They got their claws deep in every brain on the block.\n"
-	     << "Hear that Static? It's in every damn frequency. We're pullin the plug on this shit tonight.\n"
-	     << "Heres the plan, you get in and get your hands dirty. I'll keep you from getting caught. We're hitting Syntek Tower at its core.\n"
-	     << "You'll need to break down those ICE walls, dance past the patrols, and drop the liberation virus into their mainframe.\n"
-	     << "I'll net-guide, you ground-pound. I'll ghost our presence - got that?.\n"
-	     << "Remember, stay low, and don't fry your deck." << RESET << endl;
-	setbgcolor(30, 30, 30); // dark gray
+	// The “image” — look for the only doubled arrow per row.
+	cout << MAGENTA <<    "\n/==================== NEON GLITCH MURAL =====================\\\n" << RESET;
+	cout << YELLOW <<    "  Row 1:   >   <  ^   <   <   V   <   <<    <   <   ^   ^   <  \n"
+	     "  Row 2:   >   >   >  >   <<   <   V   ^    >   <   >   V   V\n"
+	     "  Row 3:   v   ^   V   <   >   <   ^   >    V  ^^   >   <   <\n"
+	     "  Row 4:   ^   VV  ^   <   <   <   >   V    ^   ^   >   <   >\n"
+	     "  Row 5:   <   V   <    <    ^    ^    V    <   >  >>   <   ^\n" << RESET;
+	cout << MAGENTA <<  "\\============================================================/\n" << RESET;
+	cout << WHITE  << "Enter the 5-step path (use L/R/U/D, e.g., L R D U L or LRDUL):\n" << RESET << endl;
 
-	cout << WHITE << "\nRun a tactical simulation of Mission 1 now? (y/n): " << RESET;
+	// Solution based on doubled arrows:
+	// Row1: <<  = L
+	// Row2: <<  = L
+	// Row3: ^^  = U
+	// Row4: VV  = D
+	// Row5: >>  = R
+	string solution = "LLUDR";
 
+	int attempts = 3;
+	for (int a = 1; a <= attempts; ++a) {
+		cout << WHITE << "Attempt " << a << "/" << attempts << " - " << RESET;
+
+		string raw;
+		getline(cin, raw);
+
+		// Normalize input to only the letters L/R/U/D (uppercase)
+		string guess;
+		for (size_t i = 0; i < raw.size(); ++i) {
+			char c = raw[i];
+			if (c >= 'a' && c <= 'z') c = c - 'a' + 'A'; // to upper
+			if (c == 'L' || c == 'R' || c == 'U' || c == 'D') {
+				guess.push_back(c);
+			}
+		}
+//-----------------------------------------------------------------------------------------------------------------------------
 		// If user entered spaces or fewer/more letters, keep only first 5 valid chars
 		if (guess.size() > 5) guess = guess.substr(0, 5);
 
@@ -405,7 +429,7 @@ void Healthwarnings(int hp) {
 struct Player {		
 	int level = 1;
 	int xp = 0;
-
+	
 	int dmg = 10;
 	int health = 50;
 	int ram = 2;
@@ -413,8 +437,6 @@ struct Player {
 	int dodgeChance = 5;
 	float armor = 1.00; //DMG REDUCTION DO NOT RAISE TO BUFF, INSTEAD LOWER
 };
-
-
 
 Player Vex; //<-------- Player
 
@@ -443,7 +465,7 @@ struct Enemy {
 	float armor;
 	bool alive;
 	bool notInCover;
-
+	
 	int turnHacked;
 	bool hacked;
 	bool stunned;
@@ -471,11 +493,12 @@ void SetEnemies(vector<Enemy> &foes, bool boss) { //Function used to set the cha
 			randRam = rand() % 3  + 1;
 			randCrit = rand() % 10  + 1;
 			randDodge = rand() % 5  + 1;
-			randArmor = 1.00 - fmodf(static_cast <float>(rand()), 0.05);  //fmodf from cmath lib doing modulo work on floats / static_cast since rand() is an int
+			randArmor = 1.00 - fmodf(static_cast <float> (rand()), 0.05); //fmodf from cmath lib doing modulo work on floats / static_cast since rand() is an int
 			Enemy bot{randLvl, randDmg, randHealth, randRam, randCrit, randDodge, randArmor, true, true, 0, false, false, false}; //Sets Enemy stats
 			foes.push_back(bot);
 		}
-	} else if (Vex.level <= 9) {
+	}
+	else if (Vex.level <= 9) {
 		randEnemies = rand() % 2 + 2;
 		for (int i = 0; i < randEnemies; i++) {
 			randLvl = rand() % 5 + 6;
@@ -484,18 +507,19 @@ void SetEnemies(vector<Enemy> &foes, bool boss) { //Function used to set the cha
 			randRam = rand() % 3  + 1;
 			randCrit = rand() % 10  + 1;
 			randDodge = rand() % 5  + 1;
-			randArmor = 1.00 - fmodf(static_cast <float>(rand()), 0.05);  //fmodf from cmath lib doing modulo work on floats / static_cast since rand() is an int
+			randArmor = 1.00 - fmodf(static_cast <float> (rand()), 0.05); //fmodf from cmath lib doing modulo work on floats / static_cast since rand() is an int
 			Enemy bot{randLvl, randDmg, randHealth, randRam, randCrit, randDodge, randArmor, true, true, 0, false, false, false}; //Sets Enemy stats
 			foes.push_back(bot);
 		}
 		//foes.push_back(bot);
 		//foes.push_back(bot);
-	} else {
+	}
+	else {
 		//foes.push_back(bot);
 		//foes.push_back(bot);
 		//foes.push_back(bot);
 	}
-
+	
 }
 //=================================================================================================
 
@@ -661,13 +685,13 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 	vector<Enemy> foes;   //Holds the foes in battle
 	SetEnemies(foes, bossFight);     //Sets Amount of foes through function
 	vector<Enemy> foesCopy = foes; //Use to reset the stats back to original
-
-	EnemyCheck(foes);
-
+	vector<Enemy> healthCheck = foes; //Use to compare original health to current
+	
 	if (enemyGoesFirst == true and turnCount == 1) {
 		cout << "Player Turn 1:\n" << endl;
 		cout << "(PLAYER TURN SKIPPED) \n";
-	} else {
+	}
+	else {
 		cout << "Player Turn " << turnCount << ":\n\n";
 		BattleControls(); //Displays Controls
 		cin >> input;
@@ -685,7 +709,7 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 				// Handle stun effect
 	else if (playerIsStunned) {
 		clearscreen(); //Clears the screen
-		cout << YELLOW << "Vex: 'I...CAN'T...MOVE!' (STUNNED)" << RESET <<  endl;
+		cout << YELLOW << "You: 'I...CAN'T...MOVE!' (STUNNED)" << RESET <<  endl;
     	cout << WHITE << ">>> You are stunned and cannot act this turn!" << RESET << endl;
         	playerIsStunned = false; //Resets the bool back to false
     	// Skip player action entirely
@@ -782,6 +806,7 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 							CombatDialogue(true, false, 2);
 						}
 					}
+					else { cout << endl << RED << "'BZZT INCOMING THREATS EVADED' (IN COVER)\n" << RESET;} //Dialogue if enemy is taking cover
 				}
 			}
 		}
@@ -792,7 +817,7 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 			playerNotInCover = false;
 			CombatDialogue(true, false, 3);
 		}
-		//=================================================================================================
+		//=================================================================================================	
 		else if (input == "4") { //CyberHack Choice
 			cout << WHITE << "Choose a target" << RESET << endl;
 
@@ -811,47 +836,27 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 				if (playerInput == i + 1) {
 					if (foes.at(i).hacked) {
 						clearscreen(); //Clears the screen
-						cout << WHITE << "You Hesitate (TURN SKIPPED)" << RESET << endl;
+						cout << "Enemy is already currently hacked.\n";
+						break;
+					}
+					else if (Vex.ram >= foes.at(i).ram) {
+						hackLanded = true;
+						cout << "Hack has a 100" << "%" << " Chance of landing.\n";
+					}
+					else if (Vex.ram >= foes.at(i).ram * 2/3) {
+						//cout << foes.at(i).ram * 2/3 << endl; //Test
+						if (randHack <= 50) { hackLanded = true; }
+						cout << "Hack has a 50" << "%" << " Chance of landing.\n";
+					}
+					else {
+						clearscreen(); //Clears the screen
+						cout << "Enemy cyberware is too hard to decrypt. \n";
 						break;
 					}
 
-					if (playerInput == i + 1) {
-						clearscreen(); //Clears the screen
-						cout << YELLOW << "Vex: 'FIRIINGGG'" << RESET <<  endl;
-						if (foes.at(i).notInCover) {
-							if (randDodge <= foes.at(i).dodgeChance) {
-								cout << RED << "'BZZZT EVASIVE MODE ACTIVATED' (Atk Dodged)" << RESET << endl;
-							} else if (randCrit <= Vex.critChance) {
-								cout << YELLOW << "Vex: 'Jackpot' (CRIT)" << RESET << endl;
-								foes.at(i).health -= 2 * Vex.dmg * foes.at(i).armor;
-								dmg = 2 * Vex.dmg * foes.at(i).armor;
-								cout << YELLOW << "\t" << dmg << "-DMG" << RESET << endl;
-								CombatDialogue(true, false);
-							} else {
-								foes.at(i).health -= Vex.dmg * foes.at(i).armor;
-								dmg = Vex.dmg * foes.at(i).armor;
-								cout << YELLOW << "\t" << dmg << "-DMG" << RESET << endl;
-								CombatDialogue(true, false);
-							}
-						} else {
-							cout << RED << "'BZZT INCOMING THREATS EVADED' (IN COVER)\n" << RESET;   //Dialogue if enemy is taking cover
-						}
-					}
-				}
-			}
-			//=================================================================================================
-			else if (input == "3") { //Take Cover Choice
-				clearscreen(); //Clears the screen
-				cout << YELLOW << "Vex: 'Gotta take cover'" << RESET << endl;
-				playerNotInCover = false;
-			}
-			//=================================================================================================
-			else if (input == "4") { //CyberHack Choice
-				cout << WHITE << "Choose a target" << RESET << endl;
-
-				cin >> playerInput;
-				for (int i = 0; i < foes.size(); i++) {
-					if (!cin) {  //IF INPUT IS NOT AN INTEGER
+					cout << "Choose a CyberHack: {1-Armor Strip, 2-Visual Overload, 3-Mind Control}\n\n";
+					cin >> secondInput;
+					if (!cin) {  //IF INPUT IS NOT AN INTEGER         
 						cin.clear();
 						string s;
 						cin >> s;
@@ -873,91 +878,36 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 						turnEnemyHackEnds = turnCount + 7; //Should hold the value the turn that the hack should end  TODO: ADJUST THIS VARIABLE TO LAST LONGER
 						foes.at(i).turnHacked = turnEnemyHackEnds;
 					}
-
-					if (playerInput == i + 1) {
-						if (foes.at(i).hacked) {
+					else if (secondInput == 3 && hackLanded) {//Mind Control
+						if (foes.size() == 1) {
 							clearscreen(); //Clears the screen
-							cout << "Enemy is already currently hacked.\n";
-							break;
-						} else if (Vex.ram >= foes.at(i).ram) {
-							hackLanded = true;
-							cout << "Hack has a 100" << "%" << " Chance of landing.\n";
-						} else if (Vex.ram >= foes.at(i).ram * 2 / 3) {
-							//cout << foes.at(i).ram * 2/3 << endl; //Test
-							if (randHack <= 50) {
-								hackLanded = true;
-							}
-							cout << "Hack has a 50" << "%" << " Chance of landing.\n";
-						} else {
-							clearscreen(); //Clears the screen
-							cout << "Enemy cyberware is too hard to decrypt. \n";
-							break;
+							hackLanded = false;
+							cout << "Enemy has no allies to attack.\n";
+							break;	
 						}
-
-						cout << "Choose a CyberHack: {1-Armor Strip, 2-Visual Overload, 3-Mind Control}\n\n";
-						cin >> secondInput;
-						if (!cin) {  //IF INPUT IS NOT AN INTEGER
-							cin.clear();
-							string s;
-							cin >> s;
-							cout << endl;
-							clearscreen(); //Clears the screen
-							cout << "You Hesitate or somethin" << endl;
-							break;
-						}
-						//=================================================================================================
-						if (secondInput == 1 && hackLanded) { //Armor Strip
-							foes.at(i).armor = 1.00;  //Resets the value or armor
+						else {
+							foes.at(i).controlled = true;
 							foes.at(i).hacked = true; //Sets the enemy as currently hacked
-							turnEnemyHackEnds = turnCount + 7; //Should hold the value the turn that the hack should end
+							turnEnemyHackEnds = turnCount + 7; //Should hold the value the turn that the hack should end 
 							foes.at(i).turnHacked = turnEnemyHackEnds;
-						} else if (secondInput == 2 && hackLanded) { //Visual Overload
-							foes.at(i).stunned = true;
-							foes.at(i).hacked = true; //Sets the enemy as currently hacked
-							turnEnemyHackEnds = turnCount + 7; //Should hold the value the turn that the hack should end  TODO: ADJUST THIS VARIABLE TO LAST LONGER
-							foes.at(i).turnHacked = turnEnemyHackEnds;
-						} else if (secondInput == 3 && hackLanded) { //Mind Control
-							if (foes.size() == 1) {
-								clearscreen(); //Clears the screen
-								hackLanded = false;
-								cout << "Enemy has no allies to attack.\n";
-								break;
-							} else {
-								foes.at(i).controlled = true;
-								foes.at(i).hacked = true; //Sets the enemy as currently hacked
-								turnEnemyHackEnds = turnCount + 7; //Should hold the value the turn that the hack should end
-								foes.at(i).turnHacked = turnEnemyHackEnds;
-							}
 						}
-						//=================================================================================================
-
 					}
-					clearscreen(); //Clears the screen
+					//=================================================================================================
+
 				}
-				//=================================================================================================
-				if (hackLanded) {
-					clearscreen(); //Clears the screen
-					cout << YELLOW << "Vex: 'IM HACKKIN IT' (SUCCESS)\n" << RESET;
-					cout << "Hack ends in Turn " << turnEnemyHackEnds << ":\n";
-					hackLanded = false; //Resets it once used
-				} else {
-					cout << "Hack unsuccessful. (MISSED)\n";
-				}
-				//=================================================================================================
-			} else if (input == "5") {
 				clearscreen(); //Clears the screen
 			} 
 			//=================================================================================================
-			if (hackLanded) { 
-				clearscreen(); //Clears the screen
-				cout << YELLOW << "You: 'IM HACKKIN IT' (SUCCESS)\n" << RESET; 
-				CombatDialogue(true, false, 4);
-				cout << endl << "Hack ends in Turn "<< turnEnemyHackEnds << ":\n";
-				hackLanded = false; //Resets it once used 
-			} 
-			else {
-				cout << "Hack unsuccessful. (MISSED)\n";
-			}
+			 if (hackLanded) {
+                clearscreen(); //Clears the screen
+                cout << YELLOW << "You: 'IM HACKKIN IT' (SUCCESS)\n" << RESET;
+                CombatDialogue(true, false, 4);
+                cout << endl << "Hack ends in Turn "<< turnEnemyHackEnds << ":\n";
+                hackLanded = false; //Resets it once used
+            }
+            else {
+                cout << "Hack unsuccessful. (MISSED)\n";
+            }
 			//=================================================================================================
 		}
 		else if (input == "5") { 
@@ -1014,14 +964,14 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 			foesCopy.at(i).health = foes.at(i).health; 
 			foesCopy.at(i).alive = foes.at(i).alive;
 			foesCopy.at(i).notInCover = foes.at(i).notInCover;
-
+			
 			if (foes.at(i).turnHacked == turnCount) {
 				foes.at(i) = foesCopy.at(i);
 				cout << "Enemy " << i + 1 << " Status effect reverted\n";
 			}
-
-			if (foes.at(i).alive) {
-				battleEnds = false;
+			
+			if (foes.at(i).alive) { 
+				battleEnds = false; 
 			}
 			foes.at(i).notInCover = true; //Sets enemies out of cover
 		}
@@ -1032,25 +982,25 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 
 
 
-
 		//Start of Enemy Turn
-
-		for (int i = 0; i < foes.size(); i++) {
+		
+		for (int i = 0; i < foes.size(); i++) { 
 			randNum = rand() % 10 + 1;    //For enemy attack
 			randControl = rand() % foes.size();
 			randCrit = rand() % 100 + 1;  //For enemy crit
 			randHack = rand() % 100 + 1;  //For enemy cyberhack
 			randDodge = rand() % 100 + 1; //For player dodge
 			//cout << randNum << endl; //Test
-
+			
 			//==================================================================================================
 			if (foes.at(i).alive == false) { 
 					//STATEMENT NEEDED so the if statements in this section willed be skipped if the enemy is dead
 			}
 			else if (foes.at(i).stunned) { //If enemy is stunned 
 				cout << RED << "BZZZZT OPTICAL SYSTEM MALFUNCTION (STUNNED)\n" << RESET;
-			} else if (foes.at(i).controlled) {
-				cout << RED << "BZZZT TARGETTING SYSTEM MALFUNCTION (MIND CONTROLLED)\n" << RESET;
+			}
+			else if (foes.at(i).controlled) {
+				cout << RED << "BZZZT TARGETTING SYSTEM MALFUNCTION (MIND CONTROLLED)\n" << RESET; 
 				//cout << "TEST PRINTING OUT : RANDCONTROL " << randControl << endl;
 				for (int j = 0; j < foes.size(); j++) {
 					if (randControl == i) {
@@ -1059,7 +1009,8 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 					}
 					if (i == j) {
 						//SKIP (DONT LET THEM ATTACK THEMSELVE)
-					} else if (randControl == j) {
+					}
+					else if (randControl == j) {
 						cout << GREEN << "BZZZZT IM BOUTTA ATTACK (ATTACKED ENEMY " << j + 1 << ")" << RESET;
 						foes.at(j).health = foes.at(j).health - (foes.at(i).dmg * foes.at(j).armor);
 						dmg = (foes.at(i).dmg * foes.at(j).armor);
@@ -1098,18 +1049,17 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 						}
 						else if (randCrit <= foes.at(i).critChance) {
 							cout << endl << RED << "'BZZT WEAKPOINT DETECTED' (CRIT)" << RESET;
-							hp = hp - 2 * (foes.at(i).dmg * Vex.armor);
-							dmg = 2 * foes.at(i).dmg * Vex.armor;
+							hp = hp - 2 * (foes.at(i).dmg * Vex.armor); 
+							dmg = 2 * foes.at(i).dmg * Vex.armor; 
 							cout << RED << " (" << dmg << "-DMG)" << RESET << endl;
 							CombatDialogue(false, true);
-						} else {
-							hp = hp - (foes.at(i).dmg * Vex.armor);
-							dmg = foes.at(i).dmg * Vex.armor;
+						} 
+						else { 
+							hp = hp - (foes.at(i).dmg * Vex.armor); 
+							dmg = foes.at(i).dmg * Vex.armor; 
 							cout << RED << " (" << dmg << "-DMG)" << RESET << endl;
 							CombatDialogue(false, true);
 						}
-					} else {
-						cout << YELLOW  << "Vex: 'Not a chance' (IN COVER)\n" << RESET;   //Dialogue if player is taking cover
 					}
 					else { cout << endl << YELLOW  << "You: 'Not a chance' (IN COVER)\n" << RESET;} //Dialogue if player is taking cover
 				}
@@ -1122,18 +1072,17 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 						}
 						else if (randCrit <= foes.at(i).critChance) {
 							cout << endl << RED << "'BZZT WEAKPOINT DETECTED' (CRIT)" << RESET;
-							hp = hp - 2 * (foes.at(i).dmg * Vex.armor);
-							dmg = 2 * foes.at(i).dmg * Vex.armor;
+							hp = hp - 2 * (foes.at(i).dmg * Vex.armor); 
+							dmg = 2 * foes.at(i).dmg * Vex.armor; 
 							cout << RED << " (" << dmg << "-DMG)" << RESET << endl;
 							CombatDialogue(false, true);
-						} else {
-							hp = hp - (foes.at(i).dmg * Vex.armor);
-							dmg = foes.at(i).dmg * Vex.armor;
+						} 
+						else { 
+							hp = hp - (foes.at(i).dmg * Vex.armor); 
+							dmg = foes.at(i).dmg * Vex.armor; 
 							cout << RED << " (" << dmg << "-DMG)" << RESET << endl;
 							CombatDialogue(false, true);
 						}
-					} else {
-						cout << YELLOW << "Vex: 'Not a chance' (IN COVER)\n" << RESET;   //Dialogue if player is taking cover
 					}
 					else { cout << endl << YELLOW << "You: 'Not a chance' (IN COVER)\n" << RESET;} //Dialogue if player is taking cover
 				}
@@ -1145,27 +1094,27 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 			foesCopy.at(i).health = foes.at(i).health;
 			foesCopy.at(i).alive = foes.at(i).alive;
 			foesCopy.at(i).notInCover = foes.at(i).notInCover;
-
+			
 			if (foes.at(i).turnHacked == turnCount) {
 				foes.at(i) = foesCopy.at(i);
 				cout << "Enemy " << i + 1 << " Status effect reverted\n";
 			}
 		}
-
+		
 		turnCount++; //End of Enemy Turn;
-
+		
 		for (int i = 0; i < foes.size(); i++) {
 			foesCopy.at(i).health = foes.at(i).health;
 			foesCopy.at(i).alive = foes.at(i).alive;
 			foesCopy.at(i).notInCover = foes.at(i).notInCover;
-
+			
 			if (foes.at(i).turnHacked == turnCount) {
 				foes.at(i) = foesCopy.at(i);
 				cout << "Enemy " << i + 1 << " Status effect reverted\n";
 			}
 		}
 		//==================================================================================================
-		
+
 		EnemyCheck(foes, healthCheck);
 		if (hp <= 0) { hp = 0; }
 			cout << YELLOW << "You: " << GREEN << hp << " hp "; //Test
@@ -1223,11 +1172,12 @@ bool Fight(bool enemyGoesFirst, bool bossFight) {
 		if (hp <= 0) { //If Player dies
 			//return false;a
 			Die();
-		} else if (battleEnds) { //If all enemies are dead
+		}
+		else if (battleEnds) { //If all enemies are dead
 			break;
 		}
 
-		playerNotInCover = true;
+	    playerNotInCover = true;
 		battleEnds = true;
 		cout << WHITE << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 		cout << endl << "Player Turn " << turnCount << ":\n";
@@ -1281,7 +1231,9 @@ int main() {
 	
 	if (playerGoesFirst) { Fight(false, false); }//(TRUE FOR ENEMY TURN FIRST / FALSE FOR PLAYER TURN FIRST, TRUE FOR BOSS FIGHT) 
 	else { Fight(true, false); }                 //I WOULD CHANGE IT BUT IT WOULD BE A HASSLE AT THIS POINT OF TIME
-	return 0;
+	
 
-    return 0;
+	secondPuzzle();
+	thirdPuzzle();
+	return 0;
 }
