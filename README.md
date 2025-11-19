@@ -1,5 +1,26 @@
 # RPGgithub
 RPG project
+ Players type their answers, codes, or patterns using cin or getline(), and the program responds using cout to display feedback, colorized dialogue, and story narration.
+ For example, when the player enters the arrow directions in the door puzzle, the game outputs Raze’s reactions and whether the pattern was correct, creating an interactive experience.
+Branches
+Each puzzle uses branches (if, else if, and else) to determine outcomes based on the player’s choices.
+ In the firewall puzzle, branches decide if the entered code is correct, wrong, or triggers hints from Raze.
+ In the lie detector puzzle, multiple branches lead to different story paths depending on how the player answers ECHO’s philosophical questions.
+ These decision points allow for dynamic storytelling and varied gameplay.
+
+Loops:
+
+Loops are used to control repeated attempts and progressive difficulty.
+In the door arrow puzzle, a for loop gives the player three tries, providing more hints after each failed attempt.
+The memory puzzle also uses loops to limit the number of attempts, while iterating through each character to compare the player’s input with the stored pattern.
+Loops keep gameplay balanced by giving the player multiple chances while maintaining challenge.
+
+Functions:
+
+Each puzzle is written as its own function, keeping the program organized and modular.
+ Examples include firstuzzle(), secondPuzzle(), and thirdPuzzle().
+ Every function handles its own input, logic, and output, returning true or false depending on success or failure.
+ This structure allows the puzzles to be called in sequence during the main mission, making the program easier to test, expand, and maintain.
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Combat 
