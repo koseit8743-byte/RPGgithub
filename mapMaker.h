@@ -28,7 +28,7 @@ void getMap(string findMap, vector<string>& returnMap) {
     }
     return;
 }
-bool setCharacterPosition(vector<int>& currentPos, vector<string>& outputMap, char characterLetter, bool movementOverride = false) {
+bool setCharacterPosition(vector<int>& currentPos, vector<string>& outputMap, char characterLetter, bool movementOverride = false, int rowOverride = 0, int colOverride = 0) {
     set_raw_mode(true);
     show_cursor(false);
     int c = toupper(quick_read());
@@ -42,6 +42,9 @@ bool setCharacterPosition(vector<int>& currentPos, vector<string>& outputMap, ch
 		if (c == 'S' or c == DOWN_ARROW) row += 3;
 		if (c == 'A' or c == LEFT_ARROW) col -= 3;
 		if (c == 'D' or c == RIGHT_ARROW) col += 3;
+	} else{
+		row = rowOverride;
+		col = colOverride;
 	}
 	if(row < 0 || col < 0 || row >= outputMap.size() || col >= outputMap.at(0).size()) return false;
     switch (outputMap.at(row).at(col)) {
@@ -127,10 +130,14 @@ void updateMap(vector<string>& currentMap, vector<vector<int>>& currentCharacter
     //TODO: fix the framerate
     usleep(1'000'000 / FPS);
 }
-void printMap(vector<string>& currentMap, vector<vector<int>>& currentPlayerPos, vector<char> characterLetterList){
+void printMap(vector<string>& currentMap, vector<vector<int>>& currentCharacterPos, vector<char> characterLetterList){
+	vector<string> updatedMap = currentMap;
+	for(int i = 0; i < currentCharacterPos.size(); i++){
+		setCharacterPosition(currentCharacterPos.at(i), updatedMap, characterLetterList.at(i), true, currentCharacterPos.at(i).at(0), currentCharacterPos.at(i).at(1));
+	}
 	for(int i = 0; i < currentMap.size(); i++){
 		for(int j = 0; j < currentMap.at(i).size(); j++){
-			char currentChar = currentMap.at(i).at(j);
+			char currentChar = updatedMap.at(i).at(j);
 			movecursor(i % currentMap.size() + 1, j % currentMap.at(i).size() + 1);
 			if(currentChar == '.'){
                         cout << RED;
