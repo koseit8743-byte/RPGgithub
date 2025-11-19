@@ -1,5 +1,11 @@
 # RPGgithub
 RPG project
+Corbin Rangel
+World Map
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Puzzles
+- Deraffaele
  Players type their answers, codes, or patterns using cin or getline(), and the program responds using cout to display feedback, colorized dialogue, and story narration.
  For example, when the player enters the arrow directions in the door puzzle, the game outputs Raze’s reactions and whether the pattern was correct, creating an interactive experience.
 Branches
