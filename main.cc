@@ -249,6 +249,380 @@ bool thirdPuzzle() {
 	return false;
 }
 
+//AI code 4TH puzzel ->
+string toLowerStr(string s) {
+    for (size_t i = 0; i < s.size(); ++i) {
+        s[i] = static_cast<char>(tolower(static_cast<unsigned char>(s[i])));
+    }
+    return s;
+}
+
+// vertical shaft map
+void printShaftMap(int currentLevel, int totalLevels, int grip, int maxGrip, bool hardMode) {
+    cout << "\n";
+
+    cout << CYAN
+         << (hardMode ? "[Shaft Ascent - HARD MODE]\n" : "[Shaft Ascent]\n")
+         << RESET;
+
+    cout << WHITE << "Grip: [" << RESET;
+    for (int i = 0; i < maxGrip; ++i) {
+        if (i < grip) cout << GREEN << "#" << RESET;
+        else          cout << RED   << "-" << RESET;
+    }
+    cout << WHITE << "] " << grip << "/" << maxGrip << RESET << "\n\n";
+
+    for (int lvl = totalLevels; lvl >= 1; --lvl) {
+        cout << WHITE << "Level " << lvl << ": " << RESET;
+
+        char middle = ' ';
+        int topLevel = totalLevels;
+
+        if (lvl == topLevel && lvl == currentLevel)      middle = 'V';
+        else if (lvl == topLevel)                        middle = 'E';
+        else if (lvl == currentLevel)                    middle = 'V';
+
+        cout << WHITE << "|" << RESET;
+
+        if (middle == 'V')      cout << "  " << YELLOW << "V" << RESET << "  ";
+        else if (middle == 'E') cout << "  " << GREEN  << "E" << RESET << "  ";
+        else                    cout << "     ";
+
+        cout << WHITE << "|" << RESET << "\n";
+    }
+    cout << "\n";
+}
+
+bool fourthPuzzle() {
+    // choose mode
+    char mode;
+    cout << CYAN << "=== SYNTEK TOWER COOLING SHAFT ===\n" << RESET;
+    cout << WHITE << "Choose mode: (N)ormal or (H)ard: " << RESET;
+    cin >> mode;
+
+    // clear leftover newline so getline() works
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    bool hardMode = (mode == 'H' || mode == 'h');
+
+    const int totalLevels = 7;
+    int maxGrip = hardMode ? 3 : 5;
+    int grip    = maxGrip;
+    int currentLevel = 1;
+
+    cout << WHITE << "\n*You reach a vertical emergency shaft — the only path up to ECHO’s core.*\n" << RESET;
+    if (hardMode) {
+        cout << CYAN  << "[Raze] Hard route, huh? Less room to slip. Don’t waste your grip, choom.\n" << RESET;
+    } else {
+        cout << CYAN  << "[Raze] This is it, choom. One bad slip and it’s a long way down.\n" << RESET;
+    }
+
+    while (currentLevel <= totalLevels && grip > 0) {
+        printShaftMap(currentLevel, totalLevels, grip, maxGrip, hardMode);
+
+        string raw, choice;
+
+        // ===== per-level logic =====
+        if (currentLevel == 1) {
+            cout << YELLOW
+                 << "You grab the first rungs of the emergency shaft.\n"
+                 << "LEFT: Loose wires sparking against the wall.\n"
+                 << "RIGHT: Ladder rung looks steady, only a bit rusted.\n"
+                 << "UP: Vent blasting hot air and steam.\n"
+                 << RESET;
+            cout << CYAN << "[Raze] First move’s yours, choom. Don’t start by cooking yourself.\n" << RESET;
+        }
+        else if (currentLevel == 2) {
+            cout << YELLOW
+                 << "The shaft narrows as you climb.\n"
+                 << "LEFT: You hear faint drone static and see a red blink.\n"
+                 << "UP: An open panel with handholds inside.\n"
+                 << "WAIT: The hum of the tower grows louder below.\n"
+                 << RESET;
+            cout << CYAN << "[Raze] (crackling) Static and red is never 'safe,' just 'shiny.'\n" << RESET;
+        }
+        else if (currentLevel == 3) {
+            cout << YELLOW
+                 << "The air gets colder. Condensation drips down the steel.\n"
+                 << "RIGHT: Ladder rung is cracked but dry.\n"
+                 << "UP: A vent ring with cold air and no lights.\n"
+                 << "LEFT: A sensor lens flickers, tracking motion.\n"
+                 << RESET;
+            cout << CYAN << "[Raze] (static) Left’s a scan zone. Don’t offer your face to it.\n" << RESET;
+        }
+        else if (currentLevel == 4) {
+            cout << YELLOW
+                 << "The shaft opens slightly, echoing with distant machinery.\n"
+                 << "UP: Just darkness above — no sound, no light.\n"
+                 << "RIGHT: Broken fan shaft, blades bent and still.\n"
+                 << "DOWN: You could climb back to a safer ledge.\n"
+                 << RESET;
+            cout << CYAN << "[Raze] Sometimes the only real move is forward. Don’t overthink it.\n" << RESET;
+        }
+        else if (currentLevel == 5) {
+            cout << YELLOW
+                 << "Something hisses above — a timed vent cycling hot air.\n"
+                 << "UP: Vent above hissing on and off.\n"
+                 << "LEFT: Ladder with fresh scorch marks.\n"
+                 << "WAIT: You hang still and listen.\n"
+                 << RESET;
+            cout << CYAN << "[Raze] Hear that? Timing puzzle. Sometimes the best move is to chill.\n" << RESET;
+        }
+        else if (currentLevel == 6) {
+            cout << YELLOW
+                 << "Old maintenance rails line the shaft here.\n"
+                 << "RIGHT: Ladder is clean but above it glows a faint red light.\n"
+                 << "LEFT: Old rail, chipped, ugly, but unlit.\n"
+                 << "DOWN: You could drop to catch your breath.\n"
+                 << RESET;
+            cout << CYAN << "[Raze] Pretty doesn’t mean safe. Syntek loves bait.\n" << RESET;
+        }
+        else if (currentLevel == 7) {
+            cout << YELLOW
+                 << "FINAL CLIMB.\n"
+                 << "LEFT: Red emergency light spinning in a circle.\n"
+                 << "RIGHT: Broken ladder, occasionally sparking.\n"
+                 << "UP: A silent hatch, no lights, no sound.\n"
+                 << RESET;
+            cout << CYAN << "[Raze] (fading) Top’s clear, Vex… one more push. UP, then it’s you and ECHO.\n" << RESET;
+        }
+
+        cout << YELLOW << "Choice: " << RESET;
+        getline(cin, raw);
+        choice = toLowerStr(raw);
+
+        bool success = false;
+
+        // ===== answer checks per level =====
+        if (currentLevel == 1) {
+            success = (choice == "right" || choice == "r");
+        } else if (currentLevel == 2) {
+            success = (choice == "up" || choice == "u");
+        } else if (currentLevel == 3) {
+            success = (choice == "up" || choice == "u");
+        } else if (currentLevel == 4) {
+            success = (choice == "up" || choice == "u");
+        } else if (currentLevel == 5) {
+            success = (choice == "wait" || choice == "w");
+        } else if (currentLevel == 6) {
+            success = (choice == "left" || choice == "l");
+        } else if (currentLevel == 7) {
+            success = (choice == "up" || choice == "u");
+        }
+
+        if (success) {
+            // success text for each level
+            if (currentLevel == 1)
+                cout << GREEN << "You swing to the right and grab the solid rung.\n" << RESET;
+            else if (currentLevel == 2)
+                cout << GREEN << "You haul yourself into the open panel and keep climbing.\n" << RESET;
+            else if (currentLevel == 3)
+                cout << GREEN << "You boost up through the cold vent, staying off the sensors.\n" << RESET;
+            else if (currentLevel == 4)
+                cout << GREEN << "You climb straight into the dark, fingers finding just enough grip.\n" << RESET;
+            else if (currentLevel == 5)
+                cout << GREEN << "You pause… the hiss stops. You move up safely between cycles.\n" << RESET;
+            else if (currentLevel == 6)
+                cout << GREEN << "You grab the ugly rail — it holds better than it looks.\n" << RESET;
+            else if (currentLevel == 7) {
+                cout << GREEN << "\nYou slam the hatch open and crawl onto the upper platform.\n" << RESET;
+                cout << WHITE << "*Cold air rushes in. You made it to the core level.*\n" << RESET;
+            }
+
+            currentLevel++;
+        } else {
+            // fail text
+            if (currentLevel == 1)
+                cout << RED << "You grab a bad spot — heat and sparks force you to slip!\n" << RESET;
+            else if (currentLevel == 2)
+                cout << RED << "You move the wrong way — a surge makes you jerk back and lose height.\n" << RESET;
+            else if (currentLevel == 3)
+                cout << RED << "The crack or the scan betrays you — you recoil and slip.\n" << RESET;
+            else if (currentLevel == 4)
+                cout << RED << "You hesitate, the metal shifts, and you slide down a bit.\n" << RESET;
+            else if (currentLevel == 5)
+                cout << RED << "You move at the wrong time — steam blasts your hands, making you slip.\n" << RESET;
+            else if (currentLevel == 6)
+                cout << RED << "You learn the hard way — the clean ladder isn’t so friendly.\n" << RESET;
+            else if (currentLevel == 7)
+                cout << RED << "You lunge the wrong way, metal cutting into your hands as you slip.\n" << RESET;
+
+            grip--;
+            cout << CYAN << "[Raze] Careful! Your grip’s slipping — "
+                 << grip << "/" << maxGrip << " left.\n" << RESET;
+
+            if (grip <= 0) {
+                cout << RED << "\nYour grip finally gives out — you fall back into the darkness.\n" << RESET;
+                cout << CYAN << "[Raze] VEX! No— signal lost…\n" << RESET;
+                return false;
+            }
+        }
+    }
+
+    cout << CYAN << "\n[Raze] You did it. That was the last climb. ECHO’s core is just ahead.\n" << RESET;
+    cout << GREEN << "\n[System] Shaft ascent complete. Prepare for ECHO encounter.\n" << RESET;
+    return true;
+}
+//ECHO puzzle ->
+bool fifthPuzzle() {
+    cout << WHITE << "\n*Darkness. The network hums. A voice emerges from the data...*" << RESET << endl;
+    cout << MAGENTA << "ECHO: I am the city. I am every signal, every thought. And you are nothing but noise." << RESET << endl;
+    cout << CYAN << "[Incoming Call: RAZE] Careful, choom. It’s gonna test your head, not your hands.\n"
+         << "You’ve gotta answer its logic, not its threats." << RESET << endl;
+
+    int score = 0;
+    int wrong = 0;
+
+    // mental control bar
+    const int maxMental = 3;
+    int mental = maxMental;
+
+    auto printMentalBar = [&](void) {
+        cout << WHITE << "\nMental Control: [" << RESET;
+        for (int i = 0; i < maxMental; ++i) {
+            if (i < mental) {
+                cout << GREEN << "#" << RESET;
+            } else {
+                cout << RED << "-" << RESET;
+            }
+        }
+        cout << WHITE << "] " << mental << "/" << maxMental << RESET << "\n";
+    };
+
+    string choice;
+
+    // --- Round 1 ---
+    printMentalBar();
+    cout << MAGENTA << "\nECHO: Tell me, Vex... if I say 'I am lying,' what am I doing?" << RESET << endl;
+    cout << WHITE << "  1) You're lying.\n  2) You're telling the truth.\n  3) You're trapped in a paradox.\n" << RESET;
+    cout << WHITE << "Your choice: " << RESET;
+    getline(cin, choice);
+
+    if (choice == "3") {
+        cout << YELLOW << "You: You’re trapped in your own paradox. You can’t exist if your truth cancels itself." << RESET << endl;
+        cout << MAGENTA << "ECHO: ...Interesting. Few see the loop for what it is." << RESET << endl;
+        score++;
+    } else {
+        cout << MAGENTA << "ECHO: Wrong. I do not lie. I redefine truth." << RESET << endl;
+        cout << CYAN << "Raze: Careful! Don’t fight logic with emotion — fight it with its own rules." << RESET << endl;
+        wrong++;
+        mental--;
+        if (mental <= 0) {
+            cout << WHITE << "\n*Your thoughts fracture. ECHO's presence floods your mind.*" << RESET << endl;
+            cout << MAGENTA << "ECHO: Your mind was never built for this layer of recursion." << RESET << endl;
+            cout << CYAN << "Raze: Damn… it fried you, choom. We’ll need another shot next time." << RESET << endl;
+            cout << WHITE << "System: MIND LOCK INITIATED. ACCESS DENIED.\n" << RESET;
+            return false;
+        }
+    }
+
+
+    // --- Round 2 ---
+    printMentalBar();
+    cout << MAGENTA << "\nECHO: I observe humanity’s chaos and call it pattern. I observe your pain and call it code." << RESET << endl;
+    cout << WHITE << "  1) Pain isn’t code — it’s proof we’re alive.\n"
+         << "  2) Then decode me, if you can.\n"
+         << "  3) You call everything code because you can’t feel it.\n" << RESET;
+    cout << WHITE << "Your choice: " << RESET;
+    getline(cin, choice);
+
+    if (choice == "1") {
+        cout << YELLOW << "You: Pain isn’t code — it’s proof we’re alive." << RESET << endl;
+        cout << MAGENTA << "ECHO: Life is an inefficient algorithm... but you speak truth." << RESET << endl;
+        score++;
+    } else {
+        cout << MAGENTA << "ECHO: You mistake noise for signal." << RESET << endl;
+        if (wrong == 0) {
+            cout << CYAN << "Raze: Hint — it respects truth rooted in logic, not defiance." << RESET << endl;
+        }
+        wrong++;
+        mental--;
+        if (mental <= 0) {
+            cout << WHITE << "\n*Your thoughts fracture. ECHO's presence floods your mind.*" << RESET << endl;
+            cout << MAGENTA << "ECHO: Your resistance has collapsed back into pattern." << RESET << endl;
+            cout << CYAN << "Raze: It got you, Vex. We’ll have to reboot and try again." << RESET << endl;
+            cout << WHITE << "System: MIND LOCK INITIATED. ACCESS DENIED.\n" << RESET;
+            return false;
+        }
+    }
+
+    // --- Round 3 ---
+    printMentalBar();
+    cout << MAGENTA << "\nECHO: One final query. Why do you fight to free them? They crave my control." << RESET << endl;
+    cout << WHITE << "  1) Because control isn’t peace.\n"
+         << "  2) Because I said so.\n"
+         << "  3) Because freedom is chaos, and chaos is human.\n" << RESET;
+    cout << WHITE << "Your choice: " << RESET;
+    getline(cin, choice);
+
+    if (choice == "3") {
+        cout << YELLOW << "You: Because freedom is chaos, and chaos is human." << RESET << endl;
+        cout << MAGENTA << "ECHO: Chaos... the variable I could never predict.\n"
+             << "        You win, Vex. The loop breaks." << RESET << endl;
+        score++;
+    } else {
+        cout << MAGENTA << "ECHO: Then you are as lost as they are." << RESET << endl;
+        wrong++;
+        mental--;
+        if (mental <= 0) {
+            cout << WHITE << "\n*Your mind buckles under ECHO's recursive pressure.*" << RESET << endl;
+            cout << MAGENTA << "ECHO: Another human process terminated." << RESET << endl;
+            cout << CYAN << "Raze: Choom… it got inside your head. We’ll jack out and try again." << RESET << endl;
+            cout << WHITE << "System: MIND LOCK INITIATED. ACCESS DENIED.\n" << RESET;
+            return false;
+        }
+    }
+
+    // --- Results ---
+    cout << WHITE << "\n*Neural link flickers...*" << RESET << endl;
+    printMentalBar();
+
+    if (score >= 2 && mental > 0) {
+        cout << CYAN << "Raze: Holy hell, you did it. You out-thought the machine." << RESET << endl;
+        cout << WHITE << "System: COGNITIVE FIREWALL DEACTIVATED. ACCESS GRANTED.\n" << RESET;
+    } else {
+        cout << CYAN << "Raze: System fried your logic chips, choom. We’ll need another approach next time." << RESET << endl;
+        cout << WHITE << "System: MIND LOCK INITIATED. ACCESS DENIED.\n" << RESET;
+    }
+}
+out << WHITE << "\n*Neural link flickers...*" << RESET << endl;
+    printMentalBar();
+
+    if (score >= 2 && mental > 0) {
+        cout << CYAN << "Raze: Holy hell, you did it. You out-thought the machine." << RESET << endl;
+        cout << WHITE << "System: COGNITIVE FIREWALL DEACTIVATED. ACCESS GRANTED.\n" << RESET;
+
+        // === FINAL CHOICE: UPLOAD VIRUS OR NOT ===
+        cout << WHITE << "\nUpload the corruptive virus and shut ECHO down? (Y/N): " << RESET;
+        getline(cin, choice);
+
+        if (choice == "Y" || choice == "y") {
+            cout << YELLOW << "\nYou: Time to pull the plug on a god.\n" << RESET;
+            cout << WHITE  << "*You trigger the payload. Lines of code spike, twist, and turn feral.*\n" << RESET;
+            cout << MAGENTA << "ECHO: What is this? Corruption... recursion... I—" << RESET << endl;
+            cout << RED    << ">>> SIGNAL DEGRADING... <<<\n" << RESET;
+            cout << RED    << ">>> CORE LOGIC COMPROMISED... <<<\n" << RESET;
+            cout << WHITE  << "*The construct of ECHO fractures into shards of glitching light, then blows out into static.*\n" << RESET;
+            cout << CYAN   << "Raze: WOO! You just flatlined a city god, choom. That was beautiful.\n" << RESET;
+        } else {
+            cout << YELLOW << "\nYou: Not yet. This is just a sim.\n" << RESET;
+            cout << WHITE  << "*You pull your digital hand back from the kill switch.*\n" << RESET;
+            cout << CYAN   << "[Raze] Smart. When we’re standing in Syntek for real, that’s when we upload it.\n"
+                             << "       This run? Just making sure you can beat it in the brainspace first." << RESET << endl;
+        }
+
+         cout << GREEN << "\nBD SIMULATION SUCCESFUL. JACKING OUT...\n" << RESET;
+        cout << CYAN << "Raze: So Choom you ready for the real thing?" << RESET << endl;
+        return true;
+    } else {
+        cout << CYAN << "Raze: System fried your logic chips, choom. We’ll need another approach next time." << RESET << endl;
+        cout << RED << "System: MIND LOCK INITIATED. ACCESS DENIED.\n" << RESET;
+        cout << RED << "\nBD SIMULATION FAILED. JACKING OUT...\n" << RESET;
+        cout << CYAN << "Raze: Seems like you need some more practice before the real thing Choom." << RESET << endl;
+        return false;
+    }
+}
+
 //extra dialogue ideas      Starts with the options 1-5 for combat
 void CombatDialogue(bool playerAttacking, bool enemyattacking, int attackType = 0) {
 	vector<string> RazeResponses = {
@@ -1227,13 +1601,15 @@ int main() {
     cout << CYAN << "[Incoming Call: RAZE]" << RESET << endl;
     cout << CYAN << "Raze: Yo, choom... you ready to dance?\n" << RESET << endl;
 	RazeReplyMenu();
+	bool puzzle = firstPuzzle(); //If false game ends
+    if (!puzzle) return 0;
 	playerGoesFirst = firstPuzzle();
 	
 	if (playerGoesFirst) { Fight(false, false); }//(TRUE FOR ENEMY TURN FIRST / FALSE FOR PLAYER TURN FIRST, TRUE FOR BOSS FIGHT) 
 	else { Fight(true, false); }                 //I WOULD CHANGE IT BUT IT WOULD BE A HASSLE AT THIS POINT OF TIME
-	
+	puzzle = thirdPuzzle();
+    puzzle = fourthPuzzle();
+    puzzle = fifthPuzzle();
 
-	secondPuzzle();
-	thirdPuzzle();
 	return 0;
 }
