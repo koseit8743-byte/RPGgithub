@@ -132,6 +132,7 @@ void updateMap(vector<string>& currentMap, vector<vector<int>>& currentCharacter
 }
 void printMap(vector<string>& currentMap, vector<vector<int>>& currentCharacterPos, vector<char> characterLetterList){
 	vector<string> updatedMap = currentMap;
+	
 	for(int i = 0; i < currentCharacterPos.size(); i++){
 		setCharacterPosition(currentCharacterPos.at(i), updatedMap, characterLetterList.at(i), true, currentCharacterPos.at(i).at(0), currentCharacterPos.at(i).at(1));
 	}
