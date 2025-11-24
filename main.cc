@@ -1621,7 +1621,7 @@ int main() {
 				map = {};
 				currentMap = "serverRoomMap.csv";
 				getMap(currentMap, map);
-				characterPos.at(0).at(0) = 57;
+				characterPos.at(0).at(0) = 56;
 				characterPos.at(0).at(1) = 77;
 				printMap(map, characterPos, characterLetters);
 			}
